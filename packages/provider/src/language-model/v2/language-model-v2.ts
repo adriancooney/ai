@@ -134,4 +134,21 @@ Response headers.
       headers?: SharedV2Headers;
     };
   }>;
+
+  doGetBatchStatus?(options: {
+    batchId: string;
+    abortSignal: AbortSignal;
+  }): Promise<
+    { status: 'pending' | 'ready' } | { status: 'error'; error: string }
+  >;
+
+  doGetBatchResults?(options: {
+    batchId: string;
+    abortSignal: AbortSignal;
+  }): AsyncIterableIterator<{ metadata: unknown; response: unknown }>;
+
+  doCreateBatch?(options: {
+    requests: unknown[];
+    abortSignal: AbortSignal;
+  }): Promise<{ batchId: string }>;
 };
