@@ -137,18 +137,18 @@ Response headers.
 
   doGetBatchStatus?(options: {
     batchId: string;
-    abortSignal: AbortSignal;
+    abortSignal?: AbortSignal;
   }): Promise<
     { status: 'pending' | 'ready' } | { status: 'error'; error: string }
   >;
 
   doGetBatchResults?(options: {
     batchId: string;
-    abortSignal: AbortSignal;
+    abortSignal?: AbortSignal;
   }): AsyncIterableIterator<{ metadata: unknown; response: unknown }>;
 
   doCreateBatch?(options: {
     requests: unknown[];
-    abortSignal: AbortSignal;
+    abortSignal?: AbortSignal;
   }): Promise<{ batchId: string }>;
 };

@@ -1,1 +1,1 @@
-export { createGenerateTextBatch, generateTextInBatch } from './batch';
+export * from './batch';

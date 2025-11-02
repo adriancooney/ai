@@ -32,8 +32,8 @@
     }
   },
   "dependencies": {
-    "@ai-sdk/provider": "workspace:*",
-    "@ai-sdk/provider-utils": "workspace:*"
+    "@ai-sdk/batch": "workspace:*",
+    "commander": "^12.1.0"
   },
   "devDependencies": {
     "@types/node": "20.17.24",
