@@ -1,6 +1,6 @@
 import { LanguageModelV2, LanguageModelV3 } from '@ai-sdk/provider';
 import { StandardSchemaV1 } from '@ai-sdk/provider-utils';
-import { generateText, GenerateTextResult, ToolSet } from 'ai';
+import { generateText, GenerateTextResult, Output, ToolSet } from 'ai';
 
 export type BatchRequest<
   CURSOR extends StandardSchemaV1,
@@ -22,15 +22,22 @@ export type BatchResponse<
   response: RESPONSE;
 };
 
-interface Batch {
-  build(options: { batchId?: string; abortSignal: AbortSignal }): Promise<void>;
+export interface Batch<CURSOR extends StandardSchemaV1> {
+  build(options: {
+    model?: LanguageModelV2 | LanguageModelV3;
+    store?: BatchStore<CURSOR>;
+    batchId?: string;
+    abortSignal?: AbortSignal;
+  }): Promise<void>;
   process(options: {
+    model?: LanguageModelV2 | LanguageModelV3;
+    store?: BatchStore<CURSOR>;
     batchId?: string;
     abortSignal: AbortSignal;
   }): Promise<void>;
 }
 
-type BatchPage<CURSOR extends StandardSchemaV1> = {
+export type BatchPage<CURSOR extends StandardSchemaV1> = {
   createdAt: number;
   cursorStart: StandardSchemaV1.InferOutput<CURSOR>;
   cursorEnd: StandardSchemaV1.InferOutput<CURSOR>;
@@ -39,10 +46,10 @@ type BatchPage<CURSOR extends StandardSchemaV1> = {
 };
 
 interface BatchStoreOperationOptions {
-  abortSignal: AbortSignal;
+  abortSignal?: AbortSignal;
 }
 
-interface BatchStore<CURSOR extends StandardSchemaV1> {
+export interface BatchStore<CURSOR extends StandardSchemaV1> {
   createBatchPage(
     options: BatchStoreOperationOptions & BatchPage<CURSOR>,
   ): Promise<BatchPage<CURSOR>>;
@@ -63,20 +70,20 @@ interface BatchStore<CURSOR extends StandardSchemaV1> {
   ): Promise<BatchPage<CURSOR>[]>;
 }
 
-interface BatchOptions<
+export interface BatchOptions<
   CURSOR extends StandardSchemaV1,
   METADATA extends StandardSchemaV1,
   REQUEST,
   RESPONSE,
 > {
-  model: LanguageModelV2 | LanguageModelV3;
-  cursorSchema: CURSOR;
-  metadataSchema: METADATA;
-  store: BatchStore<CURSOR>;
+  model?: LanguageModelV2 | LanguageModelV3;
+  store?: BatchStore<CURSOR>;
+  cursorSchema?: CURSOR;
+  metadataSchema?: METADATA;
   batchPageSize?: number;
 
   buildRequests(options: {
-    abortSignal: AbortSignal;
+    abortSignal?: AbortSignal;
     cursor?: StandardSchemaV1.InferOutput<CURSOR>;
   }): AsyncIterableIterator<BatchRequest<CURSOR, METADATA, REQUEST>>;
 
@@ -90,41 +97,49 @@ interface BatchOptions<
   onProcessResponseError?: (error: unknown) => unknown;
 }
 
-type GenerateTextBatchRequest = Omit<
+export type GenerateTextBatchRequest = Omit<
   Parameters<typeof generateText>[0],
   'model'
 >;
-type GenerateTextBatchResponse<
+
+export type GenerateTextBatchResponse<
+  CURSOR extends StandardSchemaV1,
+  METADATA extends StandardSchemaV1,
   TOOLS extends ToolSet,
-  OUTPUT,
-> = GenerateTextResult<TOOLS, OUTPUT>;
+  OUTPUT extends Output.Output,
+> = GenerateTextResult<TOOLS, OUTPUT> & {
+  cursor: StandardSchemaV1.InferOutput<CURSOR>;
+  metadata: StandardSchemaV1.InferOutput<METADATA>;
+};
 
 export function createGenerateTextBatch<
   CURSOR extends StandardSchemaV1,
   METADATA extends StandardSchemaV1,
   TOOLS extends ToolSet,
-  OUTPUT,
+  OUTPUT extends Output.Output,
 >(
   options: BatchOptions<
     CURSOR,
     METADATA,
     GenerateTextBatchRequest,
-    GenerateTextBatchResponse<TOOLS, OUTPUT>
+    GenerateTextBatchResponse<CURSOR, METADATA, TOOLS, OUTPUT>
   >,
-): Batch {
+): Batch<CURSOR> {
   const defaultBatchId = 'default';
   const batchPageSize = options.batchPageSize || 100;
 
   async function submitBatchPage(
+    store: BatchStore<CURSOR>,
+    model: LanguageModelV2 | LanguageModelV3,
     index: number,
     requests: BatchRequest<CURSOR, METADATA, GenerateTextBatchRequest>[],
-    abortSignal: AbortSignal,
+    abortSignal?: AbortSignal,
   ): Promise<BatchPage<CURSOR>> {
-    if (!options.model.doCreateBatch) {
+    if (!model.doCreateBatch) {
       throw new Error(`Provider does not support batching`);
     }
 
-    const { batchId } = await options.model.doCreateBatch({
+    const { batchId } = await model.doCreateBatch({
       requests,
       abortSignal,
     });
@@ -132,7 +147,7 @@ export function createGenerateTextBatch<
     const cursorStart = requests[0].cursor;
     const cursorEnd = requests[requests.length - 1].cursor;
 
-    return await options.store.createBatchPage({
+    return await store.createBatchPage({
       abortSignal,
       id: batchId,
       cursorStart,
@@ -143,8 +158,24 @@ export function createGenerateTextBatch<
   }
 
   return {
-    async build({ batchId = defaultBatchId, abortSignal }) {
-      let latestBatchPage = await options.store.findLatestBatchPageByBatchId({
+    async build({
+      store: inputStore,
+      model: inputModel,
+      batchId = defaultBatchId,
+      abortSignal,
+    }) {
+      const store = inputStore || options.store;
+      const model = inputModel || options.model;
+
+      if (!store) {
+        throw new Error(`No batch store provided, cannot build batch`);
+      }
+
+      if (!model) {
+        throw new Error(`No model provided, cannot build batch`);
+      }
+
+      let latestBatchPage = await store.findLatestBatchPageByBatchId({
         abortSignal,
         batchId,
       });
@@ -162,6 +193,8 @@ export function createGenerateTextBatch<
 
         if (requests.length === batchPageSize) {
           latestBatchPage = await submitBatchPage(
+            store,
+            model,
             latestBatchPage ? latestBatchPage.index + 1 : 0,
             requests,
             abortSignal,
@@ -173,6 +206,8 @@ export function createGenerateTextBatch<
 
       if (requests.length) {
         await submitBatchPage(
+          store,
+          model,
           latestBatchPage ? latestBatchPage.index + 1 : 0,
           requests,
           abortSignal,
@@ -180,11 +215,26 @@ export function createGenerateTextBatch<
       }
     },
 
-    async process({ batchId = defaultBatchId, abortSignal }) {
+    async process({
+      store: inputStore,
+      model: inputModel,
+      batchId = defaultBatchId,
+      abortSignal,
+    }) {
       let unprocessedBatchPages: BatchPage<CURSOR>[];
+      const store = inputStore || options.store;
+      const model = inputModel || options.model;
+
+      if (!store) {
+        throw new Error(`No batch store provided, cannot process batch`);
+      }
+
+      if (!model) {
+        throw new Error(`No model provided, cannot process batch`);
+      }
 
       while (
-        (unprocessedBatchPages = await options.store.queryBatchPages({
+        (unprocessedBatchPages = await store.queryBatchPages({
           abortSignal,
           batchIds: [batchId],
           statuses: ['unprocessed'],
@@ -196,25 +246,21 @@ export function createGenerateTextBatch<
 
         await Promise.all(
           unprocessedBatchPages.map(async batchPage => {
-            if (
-              !options.model.doGetBatchStatus ||
-              !options.model.doGetBatchResults
-            ) {
+            if (!model.doGetBatchStatus || !model.doGetBatchResults) {
               throw new Error(`Provider does not support batching`);
             }
 
-            const batchPageProviderStatus =
-              await options.model.doGetBatchStatus({
-                abortSignal,
-                batchId: batchPage.id,
-              });
+            const batchPageProviderStatus = await model.doGetBatchStatus({
+              abortSignal,
+              batchId: batchPage.id,
+            });
 
             if (batchPageProviderStatus.status === 'pending') {
               return;
             }
 
             if (batchPageProviderStatus.status === 'error') {
-              await options.store.updateBatchPageById({
+              await store.updateBatchPageById({
                 abortSignal,
                 id: batchPage.id,
                 status: 'errored',
@@ -227,7 +273,7 @@ export function createGenerateTextBatch<
               return;
             }
 
-            const resultIterator = options.model.doGetBatchResults({
+            const resultIterator = model.doGetBatchResults({
               abortSignal,
               batchId: batchPage.id,
             });
@@ -244,6 +290,8 @@ export function createGenerateTextBatch<
                   metadata,
                   cursor,
                   response: result.response as GenerateTextBatchResponse<
+                    CURSOR,
+                    METADATA,
                     TOOLS,
                     OUTPUT
                   >,
@@ -269,7 +317,7 @@ async function parseProvideResultMetadata<
   CURSOR extends StandardSchemaV1,
   METADATA extends StandardSchemaV1,
 >(
-  options: { cursorSchema: CURSOR; metadataSchema: METADATA },
+  options: { cursorSchema?: CURSOR; metadataSchema?: METADATA },
   resultMetadata: unknown,
 ): Promise<{
   cursor: StandardSchemaV1.InferOutput<CURSOR>;
@@ -282,12 +330,16 @@ async function parseProvideResultMetadata<
     'metadata' in resultMetadata
   ) {
     return {
-      cursor: await options.cursorSchema['~standard'].validate(
-        resultMetadata.cursor,
-      ),
-      metadata: await options.metadataSchema['~standard'].validate(
-        resultMetadata.metadata,
-      ),
+      cursor: options.cursorSchema
+        ? await options.cursorSchema['~standard'].validate(
+            resultMetadata.cursor,
+          )
+        : resultMetadata.cursor,
+      metadata: options.metadataSchema
+        ? await options.metadataSchema['~standard'].validate(
+            resultMetadata.metadata,
+          )
+        : resultMetadata.metadata,
     };
   }
 
