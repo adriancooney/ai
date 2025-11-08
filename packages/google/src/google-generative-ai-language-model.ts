@@ -24,6 +24,7 @@ import {
   zodSchema,
 } from '@ai-sdk/provider-utils';
 import { z } from 'zod/v4';
+import Debug from 'debug';
 import { convertJSONSchemaToOpenAPISchema } from './convert-json-schema-to-openapi-schema';
 import { convertToGoogleGenerativeAIMessages } from './convert-to-google-generative-ai-messages';
 import { getModelPath } from './get-model-path';
@@ -35,6 +36,8 @@ import {
 } from './google-generative-ai-options';
 import { prepareTools } from './google-prepare-tools';
 import { mapGoogleGenerativeAIFinishReason } from './map-google-generative-ai-finish-reason';
+
+const debug = Debug('ai:google:batch');
 
 type GoogleGenerativeAIConfig = {
   provider: string;
@@ -632,6 +635,361 @@ export class GoogleGenerativeAILanguageModel implements LanguageModelV3 {
       response: { headers: responseHeaders },
       request: { body },
     };
+  }
+
+  async doCreateBatch(options: {
+    requests: unknown[];
+    abortSignal?: AbortSignal;
+  }): Promise<{ batchId: string }> {
+    debug('Creating batch with %d requests', options.requests.length);
+
+    const mergedHeaders = combineHeaders(
+      await resolve(this.config.headers),
+      {},
+    );
+
+    const isGemmaModel = this.modelId.toLowerCase().startsWith('gemma-');
+
+    // Convert requests to Google batch format
+    const batchRequests = await Promise.all(
+      options.requests.map(async (batchRequest: any, index) => {
+        const request = batchRequest.request;
+
+        // Convert high-level prompt format to LanguageModelV3Prompt format
+        let prompt: any[];
+        if (request.prompt != null) {
+          // Simple string prompt - convert to messages array
+          if (typeof request.prompt === 'string') {
+            prompt = [{ role: 'user', content: request.prompt }];
+          } else if (Array.isArray(request.prompt)) {
+            prompt = request.prompt;
+          } else {
+            throw new Error('Invalid prompt format');
+          }
+        } else if (request.messages != null) {
+          prompt = request.messages;
+        } else {
+          throw new Error('Either prompt or messages must be defined');
+        }
+
+        // Add system message if provided
+        if (request.system != null && typeof request.system === 'string') {
+          prompt = [{ role: 'system', content: request.system }, ...prompt];
+        }
+
+        const { contents, systemInstruction } =
+          convertToGoogleGenerativeAIMessages(prompt, { isGemmaModel });
+
+        const { tools: googleTools, toolConfig: googleToolConfig } =
+          prepareTools({
+            tools: request.tools,
+            toolChoice: request.toolChoice,
+            modelId: this.modelId,
+          });
+
+        return {
+          request: {
+            contents,
+            generationConfig: {
+              maxOutputTokens: request.maxOutputTokens,
+              temperature: request.temperature,
+              topK: request.topK,
+              topP: request.topP,
+              frequencyPenalty: request.frequencyPenalty,
+              presencePenalty: request.presencePenalty,
+              stopSequences: request.stopSequences,
+              seed: request.seed,
+              responseMimeType:
+                request.responseFormat?.type === 'json'
+                  ? 'application/json'
+                  : undefined,
+              responseSchema:
+                request.responseFormat?.type === 'json' &&
+                request.responseFormat.schema != null
+                  ? convertJSONSchemaToOpenAPISchema(
+                      request.responseFormat.schema,
+                    )
+                  : undefined,
+            },
+            systemInstruction: isGemmaModel ? undefined : systemInstruction,
+            tools: googleTools,
+            toolConfig: googleToolConfig,
+          },
+          metadata: {
+            cursor: batchRequest.cursor,
+            metadata: batchRequest.metadata,
+          },
+        };
+      }),
+    );
+
+    const batchBody = {
+      batch: {
+        display_name: `batch-${Date.now()}`,
+        input_config: {
+          requests: {
+            requests: batchRequests,
+          },
+        },
+      },
+    };
+
+    debug('Submitting batch to Google API: %s', this.config.baseURL);
+
+    const { value: response } = await postJsonToApi({
+      url: `${this.config.baseURL}/${getModelPath(
+        this.modelId,
+      )}:batchGenerateContent`,
+      headers: mergedHeaders,
+      body: batchBody,
+      failedResponseHandler: googleFailedResponseHandler,
+      successfulResponseHandler: createJsonResponseHandler(
+        lazySchema(() => zodSchema(z.object({ name: z.string() }))),
+      ),
+      abortSignal: options.abortSignal,
+      fetch: this.config.fetch,
+    });
+
+    debug('Batch created successfully: %s', response.name);
+
+    return { batchId: response.name };
+  }
+
+  async doGetBatchStatus(options: {
+    batchId: string;
+    abortSignal?: AbortSignal;
+  }): Promise<
+    { status: 'pending' | 'ready' } | { status: 'error'; error: string }
+  > {
+    debug('Checking batch status: %s', options.batchId);
+
+    const mergedHeaders = combineHeaders(
+      await resolve(this.config.headers),
+      {},
+    );
+
+    // Filter out undefined headers and create Headers object
+    const headers = new Headers();
+    for (const [key, value] of Object.entries(mergedHeaders)) {
+      if (value !== undefined) {
+        headers.set(key, value);
+      }
+    }
+
+    const fetchFunction = this.config.fetch ?? fetch;
+    const response = await fetchFunction(
+      `${this.config.baseURL}/${options.batchId}`,
+      {
+        method: 'GET',
+        headers,
+        signal: options.abortSignal,
+      },
+    );
+
+    if (!response.ok) {
+      debug('Failed to get batch status: %d %s', response.status, response.statusText);
+      throw new Error(
+        `Failed to get batch status: ${response.status} ${response.statusText}`,
+      );
+    }
+
+    const data = await response.json();
+    const state = data.metadata?.state;
+    debug('Batch state from Google: %s', state);
+
+    // Map Google batch states to our status
+    switch (state) {
+      case 'BATCH_STATE_UNSPECIFIED':
+      case 'BATCH_STATE_PENDING':
+      case 'BATCH_STATE_IN_PROGRESS':
+        debug('Batch status: pending');
+        return { status: 'pending' };
+      case 'BATCH_STATE_SUCCEEDED':
+        debug('Batch status: ready');
+        return { status: 'ready' };
+      case 'BATCH_STATE_FAILED':
+      case 'BATCH_STATE_CANCELLED':
+        debug('Batch status: error - %s', data.error?.message ?? state);
+        return {
+          status: 'error',
+          error: data.error?.message ?? `Batch ${state}`,
+        };
+      default:
+        debug('Unknown batch state: %s, treating as pending', state);
+        return { status: 'pending' };
+    }
+  }
+
+  async *doGetBatchResults(options: {
+    batchId: string;
+    abortSignal?: AbortSignal;
+  }): AsyncIterableIterator<{ metadata: unknown; response: unknown }> {
+    debug('Retrieving batch results: %s', options.batchId);
+
+    const mergedHeaders = combineHeaders(
+      await resolve(this.config.headers),
+      {},
+    );
+
+    // Filter out undefined headers and create Headers object
+    const headers = new Headers();
+    for (const [key, value] of Object.entries(mergedHeaders)) {
+      if (value !== undefined) {
+        headers.set(key, value);
+      }
+    }
+
+    const fetchFunction = this.config.fetch ?? fetch;
+
+    // First, get the batch status to obtain the responses file URL
+    debug('Fetching batch info to get results file URL');
+    const batchStatusResponse = await fetchFunction(
+      `${this.config.baseURL}/${options.batchId}`,
+      {
+        method: 'GET',
+        headers,
+        signal: options.abortSignal,
+      },
+    );
+
+    if (!batchStatusResponse.ok) {
+      debug('Failed to get batch info: %d %s', batchStatusResponse.status, batchStatusResponse.statusText);
+      throw new Error(
+        `Failed to get batch info: ${batchStatusResponse.status} ${batchStatusResponse.statusText}`,
+      );
+    }
+
+    const batchData = await batchStatusResponse.json();
+
+    // Check if responses are inlined or in a file
+    const inlinedResponses = batchData.response?.inlinedResponses?.inlinedResponses;
+
+    if (inlinedResponses && Array.isArray(inlinedResponses)) {
+      // Responses are inlined
+      debug('Processing %d inlined responses', inlinedResponses.length);
+
+      let resultCount = 0;
+      for (const result of inlinedResponses) {
+        resultCount++;
+        debug('Yielding inlined result %d', resultCount);
+
+        // Process the response to add usage field from usageMetadata
+        const processedResponse = this.processBatchResponse(result.response);
+
+        yield {
+          metadata: result.metadata,
+          response: processedResponse,
+        };
+      }
+
+      debug('Finished yielding %d inlined results', resultCount);
+    } else {
+      // Responses are in a file
+      const responsesFileName = batchData.output_config?.responses?.name;
+      if (!responsesFileName) {
+        throw new Error('No responses found in batch result');
+      }
+
+      debug('Results file: %s', responsesFileName);
+
+      // Download the responses file
+      const downloadUrl = `https://generativelanguage.googleapis.com/download/v1beta/${responsesFileName}:download?alt=media`;
+      debug('Downloading results from: %s', downloadUrl);
+
+      const downloadResponse = await fetchFunction(downloadUrl, {
+        headers,
+        signal: options.abortSignal,
+      });
+
+      if (!downloadResponse.ok) {
+        debug('Failed to download results: %d %s', downloadResponse.status, downloadResponse.statusText);
+        throw new Error(
+          `Failed to download batch results: ${downloadResponse.statusText}`,
+        );
+      }
+
+      // Parse JSONL response
+      const text = await downloadResponse.text();
+      const lines = text.trim().split('\n');
+      debug('Retrieved %d result lines', lines.filter(l => l.trim()).length);
+
+      let resultCount = 0;
+      for (const line of lines) {
+        if (line.trim()) {
+          const result = JSON.parse(line);
+          resultCount++;
+          debug('Yielding result %d', resultCount);
+
+          // Process the response to add usage field from usageMetadata
+          const processedResponse = this.processBatchResponse(result.response);
+
+          yield {
+            metadata: result.metadata,
+            response: processedResponse,
+          };
+        }
+      }
+
+      debug('Finished yielding %d results', resultCount);
+    }
+  }
+
+  async doDeleteBatch(options: {
+    batchId: string;
+    abortSignal?: AbortSignal;
+  }): Promise<void> {
+    debug('Deleting batch: %s', options.batchId);
+
+    const mergedHeaders = combineHeaders(
+      await resolve(this.config.headers),
+      {},
+    );
+
+    // Filter out undefined headers and create Headers object
+    const headers = new Headers();
+    for (const [key, value] of Object.entries(mergedHeaders)) {
+      if (value !== undefined) {
+        headers.set(key, value);
+      }
+    }
+
+    const fetchFunction = this.config.fetch ?? fetch;
+    const response = await fetchFunction(
+      `${this.config.baseURL}/${options.batchId}`,
+      {
+        method: 'DELETE',
+        headers,
+        signal: options.abortSignal,
+      },
+    );
+
+    if (!response.ok) {
+      debug('Failed to delete batch: %d %s', response.status, response.statusText);
+      throw new Error(
+        `Failed to delete batch: ${response.status} ${response.statusText}`,
+      );
+    }
+
+    debug('Successfully deleted batch: %s', options.batchId);
+  }
+
+  private processBatchResponse(response: any): any {
+    // Convert Google's usageMetadata to the expected usage format
+    if (response.usageMetadata) {
+      const { usageMetadata, ...rest } = response;
+      return {
+        ...rest,
+        usage: {
+          inputTokens: usageMetadata.promptTokenCount ?? undefined,
+          outputTokens: usageMetadata.candidatesTokenCount ?? undefined,
+          totalTokens: usageMetadata.totalTokenCount ?? undefined,
+          reasoningTokens: usageMetadata.thoughtsTokenCount ?? undefined,
+        },
+        // Keep usageMetadata for backwards compatibility
+        usageMetadata,
+      };
+    }
+    return response;
   }
 }
 

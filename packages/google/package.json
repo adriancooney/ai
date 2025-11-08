@@ -41,10 +41,12 @@
   },
   "dependencies": {
     "@ai-sdk/provider": "workspace:*",
-    "@ai-sdk/provider-utils": "workspace:*"
+    "@ai-sdk/provider-utils": "workspace:*",
+    "debug": "^4.4.1"
   },
   "devDependencies": {
     "@ai-sdk/test-server": "workspace:*",
+    "@types/debug": "^4.1.12",
     "@types/node": "20.17.24",
     "@vercel/ai-tsconfig": "workspace:*",
     "tsup": "^8",
