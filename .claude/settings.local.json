@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "WebSearch",
+      "WebFetch(domain:ai.google.dev)",
+      "Bash(npm run build:*)",
+      "Read(//Users/adrian/Code/househunter/**)",
+      "Bash(npm test:*)",
+      "Bash(pnpm build:*)",
+      "Bash(pnpm add:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

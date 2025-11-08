@@ -145,10 +145,16 @@ Response headers.
   doGetBatchResults?(options: {
     batchId: string;
     abortSignal?: AbortSignal;
-  }): AsyncIterableIterator<{ metadata: unknown; response: unknown }>;
+  }): AsyncIterableIterator<{ id: string; data: unknown }>;
 
   doCreateBatch?(options: {
+    metadata: unknown;
     requests: unknown[];
     abortSignal?: AbortSignal;
   }): Promise<{ batchId: string }>;
+
+  doDeleteBatch?(options: {
+    batchId: string;
+    abortSignal?: AbortSignal;
+  }): Promise<void>;
 };
