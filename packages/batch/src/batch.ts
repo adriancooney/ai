@@ -1,58 +1,46 @@
-import { LanguageModelV2, LanguageModelV3 } from '@ai-sdk/provider';
-import { Batch, BatchMetadata, BatchRequest } from './types';
-import { BatchNotSupportedError } from './errors';
+import { BatchModelV1 } from '@ai-sdk/provider';
+import { Batch, BatchMetadata, BatchRequest, BatchResponse } from './types';
+import { Output, ToolSet } from 'ai';
 
-export async function createBatch({
+export async function createBatch<MODEL extends BatchModelV1>({
   model,
   metadata,
   requests,
   abortSignal,
 }: {
-  model: LanguageModelV2 | LanguageModelV3;
+  model: MODEL;
   metadata: BatchMetadata;
-  requests: BatchRequest[];
+  requests: BatchRequest<MODEL>[];
   abortSignal?: AbortSignal;
 }): Promise<Batch> {
-  if (!model.doCreateBatch) {
-    throw new Error(
-      `Cannot create batch: model '${model.modelId}' does not support batching`,
-    );
-  }
-
-  const { batchId: providerBatchId } = await model.doCreateBatch({
+  const batch = await model.doCreateBatch({
     metadata,
     requests,
     abortSignal,
   });
 
-  return {
-    id: providerBatchId,
-    metadata,
-    status: 'pending',
-  };
+  return batch;
 }
 
-export async function* consumeBatchResults({
+export async function* consumeBatchResults<
+  MODEL extends BatchModelV1,
+  TOOLS extends ToolSet,
+  OUTPUT extends Output.Output,
+>({
   model,
   id,
   abortSignal,
 }: {
   id: string;
-  model: LanguageModelV2 | LanguageModelV3;
+  model: BatchModelV1;
   abortSignal?: AbortSignal;
-}): AsyncIterableIterator<{ id: string; data: unknown }> {
-  if (!model.doGetBatchResults) {
-    throw new BatchNotSupportedError({
-      name: 'batch_not_supported',
-      message: `Batch is not supported with model '${model.modelId}'`,
-    });
-  }
-
-  for await (const response of model.doGetBatchResults({
-    batchId: id,
+}): AsyncIterableIterator<BatchResponse<MODEL, TOOLS, OUTPUT>> {
+  for await (const response of model.doGetBatchResultsById({
+    id,
     abortSignal,
   })) {
-    yield response;
+    // TODO: Remove this typecast
+    yield response as unknown as BatchResponse<MODEL, TOOLS, OUTPUT>;
   }
 
   await deleteBatchById({
@@ -67,19 +55,12 @@ export async function deleteBatchById({
   id,
   abortSignal,
 }: {
-  model: LanguageModelV2 | LanguageModelV3;
+  model: BatchModelV1;
   id: string;
   abortSignal?: AbortSignal;
 }): Promise<void> {
-  if (!model.doDeleteBatch) {
-    throw new BatchNotSupportedError({
-      name: 'batch_not_supported',
-      message: `Batch is not supported with model '${model.modelId}'`,
-    });
-  }
-
-  await model.doDeleteBatch({
-    batchId: id,
+  await model.doDeleteBatchById({
+    id,
     abortSignal,
   });
 }

@@ -3,6 +3,7 @@ import {
   LanguageModelV3,
   ProviderV3,
   ImageModelV3,
+  BatchModelV1,
 } from '@ai-sdk/provider';
 import {
   FetchFunction,
@@ -27,7 +28,9 @@ import { GoogleGenerativeAIImageModel } from './google-generative-ai-image-model
 export interface GoogleGenerativeAIProvider extends ProviderV3 {
   (modelId: GoogleGenerativeAIModelId): LanguageModelV3;
 
-  languageModel(modelId: GoogleGenerativeAIModelId): LanguageModelV3;
+  languageModel(
+    modelId: GoogleGenerativeAIModelId,
+  ): LanguageModelV3 & BatchModelV1;
 
   chat(modelId: GoogleGenerativeAIModelId): LanguageModelV3;
 

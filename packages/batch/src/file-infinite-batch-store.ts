@@ -19,8 +19,9 @@ export function createFileInfiniteBatchStore(
   async function getState(): Promise<FileInfiniteBatchStoreState> {
     try {
       const content = await readFile(stateFilepath, 'utf-8');
+      const state = JSON.parse(content);
 
-      return JSON.parse(content);
+      return state;
     } catch (error) {
       if (
         error instanceof Error &&
@@ -54,15 +55,18 @@ export function createFileInfiniteBatchStore(
 
     async queryBatches(query, options) {
       const { groupKey } = query;
+
       const state = await getState();
 
-      return state.batches.filter(batch => {
+      const matchingBatches = state.batches.filter(batch => {
         if (groupKey && batch.metadata.groupKey !== groupKey) {
           return false;
         }
 
         return true;
       });
+
+      return matchingBatches;
     },
   };
 }
@@ -79,6 +83,7 @@ export function createFileInfiniteBatchBuilderStore<CURSOR>(
     ...fileInfiniteBatchStore,
     async getLatestBatch() {
       const { batches } = await fileInfiniteBatchStore.getState();
+
       const sortedBatches = batches.sort((batchA, batchB) =>
         options.cursorComparator(
           batchA.metadata.cursor,
@@ -86,7 +91,9 @@ export function createFileInfiniteBatchBuilderStore<CURSOR>(
         ),
       );
 
-      return sortedBatches[sortedBatches.length - 1] || null;
+      const latestBatch = sortedBatches[sortedBatches.length - 1] || null;
+
+      return latestBatch;
     },
   };
 }

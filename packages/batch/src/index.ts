@@ -1,2 +1,3 @@
 export { getInfiniteBatch } from './infinite-batch';
-export { createFileInfiniteBatchStore } from './file-infinite-batch-store';
+export { createProviderInfiniteBatchStore } from './provider-infinite-batch-store';
+export type * from './types';

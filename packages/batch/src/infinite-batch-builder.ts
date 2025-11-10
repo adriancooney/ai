@@ -1,39 +1,58 @@
-import { LanguageModelV2, LanguageModelV3 } from '@ai-sdk/provider';
+import { BatchModelV1 } from '@ai-sdk/provider';
 import {
   getInfiniteBatch,
   InfiniteBatch,
   InfiniteBatchMetadata,
   InfiniteBatchStore,
 } from './infinite-batch';
-import { Batch } from './types';
+import { Batch, BatchRequest } from './types';
+import { Output, ToolSet } from 'ai';
 
 export interface InfiniteBatchBuilderStore<CURSOR>
   extends InfiniteBatchStore<CURSOR> {
   getLatestBatch(): Promise<Batch<InfiniteBatchMetadata<CURSOR>> | null>;
 }
 
-export interface InfiniteBatchBuilderOptions<CURSOR> {
+export interface InfiniteBatchBuilderOptions<
+  CURSOR,
+  MODEL extends BatchModelV1,
+> {
   key: string;
-  model: LanguageModelV2 | LanguageModelV3;
+  model: MODEL;
   store: InfiniteBatchBuilderStore<CURSOR>;
-  findRequests(cursor?: CURSOR): AsyncIterableIterator<{
-    id: string;
-    request: unknown;
-    cursor: CURSOR;
-  }>;
+  findRequests(cursor?: CURSOR): AsyncIterableIterator<
+    {
+      cursor: CURSOR;
+    } & BatchRequest<MODEL>
+  >;
 }
 
-export interface InfiniteBatchBuilder<CURSOR> extends InfiniteBatch<CURSOR> {
+export interface InfiniteBatchBuilder<
+  CURSOR,
+  MODEL extends BatchModelV1,
+  TOOLS extends ToolSet,
+  OUTPUT extends Output.Output,
+> extends InfiniteBatch<CURSOR, MODEL, TOOLS, OUTPUT> {
   buildRequests(options?: { abortSignal: AbortSignal }): Promise<void>;
 }
 
-export function createInfiniteBatchBuilder<CURSOR>({
+export function createInfiniteBatchBuilder<
+  CURSOR,
+  MODEL extends BatchModelV1,
+  TOOLS extends ToolSet,
+  OUTPUT extends Output.Output,
+>({
   key,
   model,
   store,
   findRequests,
-}: InfiniteBatchBuilderOptions<CURSOR>): InfiniteBatchBuilder<CURSOR> {
-  const infiniteBatch = getInfiniteBatch({
+}: InfiniteBatchBuilderOptions<CURSOR, MODEL>): InfiniteBatchBuilder<
+  CURSOR,
+  MODEL,
+  TOOLS,
+  OUTPUT
+> {
+  const infiniteBatch = getInfiniteBatch<CURSOR, MODEL, TOOLS, OUTPUT>({
     key,
     model,
     store,
@@ -45,10 +64,13 @@ export function createInfiniteBatchBuilder<CURSOR>({
     async buildRequests() {
       const latestBatch = await store.getLatestBatch();
 
-      for await (const { id, request, cursor } of findRequests(
+      for await (const { cursor, ...request } of findRequests(
         latestBatch?.metadata.cursor,
       )) {
-        await infiniteBatch.pushRequest({ id, data: request }, { cursor });
+        // TODO: Remove this case
+        const castedRequest = request as unknown as BatchRequest<MODEL>;
+
+        await infiniteBatch.pushRequest(castedRequest, { cursor });
       }
     },
   };

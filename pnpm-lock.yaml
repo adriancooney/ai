@@ -1686,13 +1686,7 @@ importers:
       ai:
         specifier: workspace:*
         version: link:../ai
-      debug:
-        specifier: ^4.4.3
-        version: 4.4.3(supports-color@9.4.0)
     devDependencies:
-      '@types/debug':
-        specifier: ^4.1.12
-        version: 4.1.12
       '@types/node':
         specifier: 20.17.24
         version: 20.17.24

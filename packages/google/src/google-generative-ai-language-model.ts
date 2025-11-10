@@ -1,4 +1,5 @@
 import {
+  BatchModelV1,
   LanguageModelV3,
   LanguageModelV3CallWarning,
   LanguageModelV3Content,
@@ -23,8 +24,7 @@ import {
   resolve,
   zodSchema,
 } from '@ai-sdk/provider-utils';
-import { z } from 'zod/v4';
-import Debug from 'debug';
+import { success, z } from 'zod/v4';
 import { convertJSONSchemaToOpenAPISchema } from './convert-json-schema-to-openapi-schema';
 import { convertToGoogleGenerativeAIMessages } from './convert-to-google-generative-ai-messages';
 import { getModelPath } from './get-model-path';
@@ -36,8 +36,6 @@ import {
 } from './google-generative-ai-options';
 import { prepareTools } from './google-prepare-tools';
 import { mapGoogleGenerativeAIFinishReason } from './map-google-generative-ai-finish-reason';
-
-const debug = Debug('ai:google:batch');
 
 type GoogleGenerativeAIConfig = {
   provider: string;
@@ -52,13 +50,35 @@ type GoogleGenerativeAIConfig = {
   supportedUrls?: () => LanguageModelV3['supportedUrls'];
 };
 
-export class GoogleGenerativeAILanguageModel implements LanguageModelV3 {
+export class GoogleGenerativeAILanguageModel
+  implements LanguageModelV3, BatchModelV1<{ limits: { sizeInBytes: number } }>
+{
   readonly specificationVersion = 'v3';
 
   readonly modelId: GoogleGenerativeAIModelId;
 
   private readonly config: GoogleGenerativeAIConfig;
   private readonly generateId: () => string;
+
+  /**
+   * Batch policy for Google Generative AI.
+   *
+   * Based on Google's documented limits:
+   * - Input file size limit: 2GB (using 1.9GB for safety margin)
+   * - Inline request size recommendation: under 20MB
+   * - No explicit limit on number of requests, but constrained by total size
+   *
+   * We set a conservative limit of 10,000 requests per batch to ensure
+   * reasonable processing times and manageability.
+   *
+   * @see https://ai.google.dev/gemini-api/docs/batch-api
+   * @see https://ai.google.dev/gemini-api/docs/rate-limits
+   */
+  readonly batchPolicy = {
+    limits: {
+      sizeInBytes: 2 * 1024 * 1024 * 1024,
+    },
+  };
 
   constructor(
     modelId: GoogleGenerativeAIModelId,
@@ -75,6 +95,32 @@ export class GoogleGenerativeAILanguageModel implements LanguageModelV3 {
 
   get supportedUrls() {
     return this.config.supportedUrls?.() ?? {};
+  }
+
+  measureBatchRequest(request: { id: string } & unknown): {
+    sizeInBytes: number;
+  } {
+    return {
+      sizeInBytes: getBatchRequestSizeInBytes(request),
+    };
+  }
+
+  validateBatchRequest(
+    request: { id: string } & unknown,
+  ):
+    | { success: true }
+    | { success: false; code: 'batch_request_too_large'; message: string } {
+    if (getBatchRequestSizeInBytes(request) > 20 * 1024 * 1024) {
+      return {
+        success: false,
+        code: 'batch_request_too_large',
+        message: 'Batch request exceeds limit of 20MB',
+      };
+    }
+
+    return {
+      success: true,
+    };
   }
 
   private async getArgs({
@@ -638,11 +684,14 @@ export class GoogleGenerativeAILanguageModel implements LanguageModelV3 {
   }
 
   async doCreateBatch(options: {
-    requests: unknown[];
+    metadata: unknown;
+    requests: ({ id: string } & unknown)[];
     abortSignal?: AbortSignal;
-  }): Promise<{ batchId: string }> {
-    debug('Creating batch with %d requests', options.requests.length);
-
+  }): Promise<{
+    id: string;
+    status: 'pending' | 'ready' | 'error';
+    metadata: Record<string, unknown>;
+  }> {
     const mergedHeaders = combineHeaders(
       await resolve(this.config.headers),
       {},
@@ -652,8 +701,9 @@ export class GoogleGenerativeAILanguageModel implements LanguageModelV3 {
 
     // Convert requests to Google batch format
     const batchRequests = await Promise.all(
-      options.requests.map(async (batchRequest: any, index) => {
-        const request = batchRequest.request;
+      options.requests.map(async (batchRequest: any) => {
+        // Extract the id from the request
+        const { id, ...request } = batchRequest;
 
         // Convert high-level prompt format to LanguageModelV3Prompt format
         let prompt: any[];
@@ -716,8 +766,7 @@ export class GoogleGenerativeAILanguageModel implements LanguageModelV3 {
             toolConfig: googleToolConfig,
           },
           metadata: {
-            cursor: batchRequest.cursor,
-            metadata: batchRequest.metadata,
+            id,
           },
         };
       }),
@@ -734,8 +783,6 @@ export class GoogleGenerativeAILanguageModel implements LanguageModelV3 {
       },
     };
 
-    debug('Submitting batch to Google API: %s', this.config.baseURL);
-
     const { value: response } = await postJsonToApi({
       url: `${this.config.baseURL}/${getModelPath(
         this.modelId,
@@ -750,19 +797,21 @@ export class GoogleGenerativeAILanguageModel implements LanguageModelV3 {
       fetch: this.config.fetch,
     });
 
-    debug('Batch created successfully: %s', response.name);
-
-    return { batchId: response.name };
+    return {
+      id: response.name,
+      status: 'pending',
+      metadata: (options.metadata as Record<string, unknown>) ?? {},
+    };
   }
 
-  async doGetBatchStatus(options: {
-    batchId: string;
+  async doGetBatchById(options: {
+    id: string;
     abortSignal?: AbortSignal;
-  }): Promise<
-    { status: 'pending' | 'ready' } | { status: 'error'; error: string }
-  > {
-    debug('Checking batch status: %s', options.batchId);
-
+  }): Promise<{
+    id: string;
+    status: 'pending' | 'ready' | 'error';
+    metadata: Record<string, unknown>;
+  }> {
     const mergedHeaders = combineHeaders(
       await resolve(this.config.headers),
       {},
@@ -778,7 +827,7 @@ export class GoogleGenerativeAILanguageModel implements LanguageModelV3 {
 
     const fetchFunction = this.config.fetch ?? fetch;
     const response = await fetchFunction(
-      `${this.config.baseURL}/${options.batchId}`,
+      `${this.config.baseURL}/${options.id}`,
       {
         method: 'GET',
         headers,
@@ -787,7 +836,6 @@ export class GoogleGenerativeAILanguageModel implements LanguageModelV3 {
     );
 
     if (!response.ok) {
-      debug('Failed to get batch status: %d %s', response.status, response.statusText);
       throw new Error(
         `Failed to get batch status: ${response.status} ${response.statusText}`,
       );
@@ -795,37 +843,37 @@ export class GoogleGenerativeAILanguageModel implements LanguageModelV3 {
 
     const data = await response.json();
     const state = data.metadata?.state;
-    debug('Batch state from Google: %s', state);
 
     // Map Google batch states to our status
+    let status: 'pending' | 'ready' | 'error';
     switch (state) {
       case 'BATCH_STATE_UNSPECIFIED':
       case 'BATCH_STATE_PENDING':
       case 'BATCH_STATE_IN_PROGRESS':
-        debug('Batch status: pending');
-        return { status: 'pending' };
+        status = 'pending';
+        break;
       case 'BATCH_STATE_SUCCEEDED':
-        debug('Batch status: ready');
-        return { status: 'ready' };
+        status = 'ready';
+        break;
       case 'BATCH_STATE_FAILED':
       case 'BATCH_STATE_CANCELLED':
-        debug('Batch status: error - %s', data.error?.message ?? state);
-        return {
-          status: 'error',
-          error: data.error?.message ?? `Batch ${state}`,
-        };
+        status = 'error';
+        break;
       default:
-        debug('Unknown batch state: %s, treating as pending', state);
-        return { status: 'pending' };
+        status = 'pending';
     }
+
+    return {
+      id: options.id,
+      status,
+      metadata: data.metadata ?? {},
+    };
   }
 
-  async *doGetBatchResults(options: {
-    batchId: string;
+  async *doGetBatchResultsById(options: {
+    id: string;
     abortSignal?: AbortSignal;
-  }): AsyncIterableIterator<{ metadata: unknown; response: unknown }> {
-    debug('Retrieving batch results: %s', options.batchId);
-
+  }): AsyncIterableIterator<{ id: string; data: unknown }> {
     const mergedHeaders = combineHeaders(
       await resolve(this.config.headers),
       {},
@@ -842,9 +890,8 @@ export class GoogleGenerativeAILanguageModel implements LanguageModelV3 {
     const fetchFunction = this.config.fetch ?? fetch;
 
     // First, get the batch status to obtain the responses file URL
-    debug('Fetching batch info to get results file URL');
     const batchStatusResponse = await fetchFunction(
-      `${this.config.baseURL}/${options.batchId}`,
+      `${this.config.baseURL}/${options.id}`,
       {
         method: 'GET',
         headers,
@@ -853,7 +900,6 @@ export class GoogleGenerativeAILanguageModel implements LanguageModelV3 {
     );
 
     if (!batchStatusResponse.ok) {
-      debug('Failed to get batch info: %d %s', batchStatusResponse.status, batchStatusResponse.statusText);
       throw new Error(
         `Failed to get batch info: ${batchStatusResponse.status} ${batchStatusResponse.statusText}`,
       );
@@ -862,27 +908,20 @@ export class GoogleGenerativeAILanguageModel implements LanguageModelV3 {
     const batchData = await batchStatusResponse.json();
 
     // Check if responses are inlined or in a file
-    const inlinedResponses = batchData.response?.inlinedResponses?.inlinedResponses;
+    const inlinedResponses =
+      batchData.response?.inlinedResponses?.inlinedResponses;
 
     if (inlinedResponses && Array.isArray(inlinedResponses)) {
       // Responses are inlined
-      debug('Processing %d inlined responses', inlinedResponses.length);
-
-      let resultCount = 0;
       for (const result of inlinedResponses) {
-        resultCount++;
-        debug('Yielding inlined result %d', resultCount);
-
         // Process the response to add usage field from usageMetadata
         const processedResponse = this.processBatchResponse(result.response);
 
         yield {
-          metadata: result.metadata,
-          response: processedResponse,
+          id: result.metadata?.id ?? '',
+          data: processedResponse,
         };
       }
-
-      debug('Finished yielding %d inlined results', resultCount);
     } else {
       // Responses are in a file
       const responsesFileName = batchData.output_config?.responses?.name;
@@ -890,11 +929,8 @@ export class GoogleGenerativeAILanguageModel implements LanguageModelV3 {
         throw new Error('No responses found in batch result');
       }
 
-      debug('Results file: %s', responsesFileName);
-
       // Download the responses file
       const downloadUrl = `https://generativelanguage.googleapis.com/download/v1beta/${responsesFileName}:download?alt=media`;
-      debug('Downloading results from: %s', downloadUrl);
 
       const downloadResponse = await fetchFunction(downloadUrl, {
         headers,
@@ -902,7 +938,6 @@ export class GoogleGenerativeAILanguageModel implements LanguageModelV3 {
       });
 
       if (!downloadResponse.ok) {
-        debug('Failed to download results: %d %s', downloadResponse.status, downloadResponse.statusText);
         throw new Error(
           `Failed to download batch results: ${downloadResponse.statusText}`,
         );
@@ -911,35 +946,27 @@ export class GoogleGenerativeAILanguageModel implements LanguageModelV3 {
       // Parse JSONL response
       const text = await downloadResponse.text();
       const lines = text.trim().split('\n');
-      debug('Retrieved %d result lines', lines.filter(l => l.trim()).length);
 
-      let resultCount = 0;
       for (const line of lines) {
         if (line.trim()) {
           const result = JSON.parse(line);
-          resultCount++;
-          debug('Yielding result %d', resultCount);
 
           // Process the response to add usage field from usageMetadata
           const processedResponse = this.processBatchResponse(result.response);
 
           yield {
-            metadata: result.metadata,
-            response: processedResponse,
+            id: result.metadata?.id ?? '',
+            data: processedResponse,
           };
         }
       }
-
-      debug('Finished yielding %d results', resultCount);
     }
   }
 
-  async doDeleteBatch(options: {
-    batchId: string;
+  async doDeleteBatchById(options: {
+    id: string;
     abortSignal?: AbortSignal;
   }): Promise<void> {
-    debug('Deleting batch: %s', options.batchId);
-
     const mergedHeaders = combineHeaders(
       await resolve(this.config.headers),
       {},
@@ -955,7 +982,7 @@ export class GoogleGenerativeAILanguageModel implements LanguageModelV3 {
 
     const fetchFunction = this.config.fetch ?? fetch;
     const response = await fetchFunction(
-      `${this.config.baseURL}/${options.batchId}`,
+      `${this.config.baseURL}/${options.id}`,
       {
         method: 'DELETE',
         headers,
@@ -964,13 +991,80 @@ export class GoogleGenerativeAILanguageModel implements LanguageModelV3 {
     );
 
     if (!response.ok) {
-      debug('Failed to delete batch: %d %s', response.status, response.statusText);
       throw new Error(
         `Failed to delete batch: ${response.status} ${response.statusText}`,
       );
     }
+  }
 
-    debug('Successfully deleted batch: %s', options.batchId);
+  async doListBatches(options?: { abortSignal?: AbortSignal }): Promise<
+    Array<{
+      id: string;
+      status: 'pending' | 'ready' | 'error';
+      metadata: Record<string, unknown>;
+    }>
+  > {
+    const mergedHeaders = combineHeaders(
+      await resolve(this.config.headers),
+      {},
+    );
+
+    // Filter out undefined headers and create Headers object
+    const headers = new Headers();
+    for (const [key, value] of Object.entries(mergedHeaders)) {
+      if (value !== undefined) {
+        headers.set(key, value);
+      }
+    }
+
+    const fetchFunction = this.config.fetch ?? fetch;
+
+    // List all batches (not model-specific)
+    const response = await fetchFunction(
+      `${this.config.baseURL}/batches`,
+      {
+        method: 'GET',
+        headers,
+        signal: options?.abortSignal,
+      },
+    );
+
+    if (!response.ok) {
+      throw new Error(
+        `Failed to list batches: ${response.status} ${response.statusText}`,
+      );
+    }
+
+    const data = await response.json();
+    const batches = data.batches ?? [];
+
+    return batches.map((batch: any) => {
+      const state = batch.metadata?.state;
+      let status: 'pending' | 'ready' | 'error';
+
+      switch (state) {
+        case 'BATCH_STATE_UNSPECIFIED':
+        case 'BATCH_STATE_PENDING':
+        case 'BATCH_STATE_IN_PROGRESS':
+          status = 'pending';
+          break;
+        case 'BATCH_STATE_SUCCEEDED':
+          status = 'ready';
+          break;
+        case 'BATCH_STATE_FAILED':
+        case 'BATCH_STATE_CANCELLED':
+          status = 'error';
+          break;
+        default:
+          status = 'pending';
+      }
+
+      return {
+        id: batch.name,
+        status,
+        metadata: batch.metadata ?? {},
+      };
+    });
   }
 
   private processBatchResponse(response: any): any {
@@ -1240,3 +1334,7 @@ const chunkSchema = lazySchema(() =>
 );
 
 type ChunkSchema = InferSchema<typeof chunkSchema>;
+
+function getBatchRequestSizeInBytes(request: { id: string } & unknown): number {
+  return Buffer.byteLength(JSON.stringify(request), 'utf8');
+}
