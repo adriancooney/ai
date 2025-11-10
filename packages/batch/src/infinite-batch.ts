@@ -1,26 +1,23 @@
-import { LanguageModelV2, LanguageModelV3 } from '@ai-sdk/provider';
+import { BatchModelV1 } from '@ai-sdk/provider';
 import { Batch, BatchRequest, BatchResponse } from './types';
-import { BatchNotSupportedError } from './errors';
 import { consumeBatchResults } from './batch';
 import { type BatchBuilder, createBatchBuilder } from './batch-builder';
+import { ToolSet, Output } from 'ai';
+import { createProviderInfiniteBatchStore } from './provider-infinite-batch-store';
 
-export interface InfiniteBatch<CURSOR> {
+export interface InfiniteBatch<
+  CURSOR,
+  MODEL extends BatchModelV1,
+  TOOLS extends ToolSet,
+  OUTPUT extends Output.Output,
+> {
   pushRequest(
-    request: BatchRequest,
+    request: BatchRequest<MODEL>,
     options?: { cursor?: CURSOR; abortSignal?: AbortSignal },
   ): Promise<void>;
-  findAvailableBatches(options?: {
-    abortSignal?: AbortSignal;
-  }): Promise<Batch<InfiniteBatchMetadata<CURSOR>>[]>;
-  consumeAvailableBatches(options?: { abortSignal?: AbortSignal }): Promise<
-    {
-      batch: Batch;
-      consumeResponses: AsyncIterableIterator<BatchResponse>;
-    }[]
-  >;
   consumeAvailableResponses(options?: {
     abortSignal?: AbortSignal;
-  }): AsyncIterableIterator<BatchResponse>;
+  }): AsyncIterableIterator<BatchResponse<MODEL, TOOLS, OUTPUT>>;
 }
 
 export type InfiniteBatchMetadata<CURSOR> = {
@@ -41,28 +38,41 @@ export type InfiniteBatchStore<CURSOR> = {
   ): Promise<Batch<InfiniteBatchMetadata<CURSOR>>[]>;
 };
 
-export type InfiniteBatchOptions<CURSOR> = {
+export type InfiniteBatchOptions<CURSOR, MODEL extends BatchModelV1> = {
   key: string;
-  model: LanguageModelV2 | LanguageModelV3;
-  store: InfiniteBatchStore<CURSOR>;
+  model: MODEL;
+  store?: InfiniteBatchStore<CURSOR>;
 };
 
-export function getInfiniteBatch<CURSOR>({
+export function getInfiniteBatch<
+  CURSOR,
+  MODEL extends BatchModelV1,
+  TOOLS extends ToolSet,
+  OUTPUT extends Output.Output,
+>({
   key: groupKey,
   model,
-  store,
-}: InfiniteBatchOptions<CURSOR>): InfiniteBatch<CURSOR> {
-  let batchBuilder: BatchBuilder | undefined;
+  store: inputStore,
+}: InfiniteBatchOptions<CURSOR, MODEL>): InfiniteBatch<
+  CURSOR,
+  MODEL,
+  TOOLS,
+  OUTPUT
+> {
+  const store = inputStore || createProviderInfiniteBatchStore<CURSOR>(model);
+  let batchBuilder: BatchBuilder<MODEL> | undefined;
 
   async function findAvailableBatches(options?: {
     abortSignal?: AbortSignal;
   }): Promise<Batch<InfiniteBatchMetadata<CURSOR>>[]> {
-    return await store.queryBatches(
+    const batches = await store.queryBatches(
       {
         groupKey,
       },
       options,
     );
+
+    return batches;
   }
 
   async function consumeAvailableBatches(options?: {
@@ -70,18 +80,11 @@ export function getInfiniteBatch<CURSOR>({
   }): Promise<
     {
       batch: Batch<InfiniteBatchMetadata<CURSOR>>;
-      consumeResponses: AsyncIterableIterator<BatchResponse>;
+      consumeResponses: AsyncIterableIterator<
+        BatchResponse<MODEL, TOOLS, OUTPUT>
+      >;
     }[]
   > {
-    const { doGetBatchResults } = model;
-
-    if (!doGetBatchResults) {
-      throw new BatchNotSupportedError({
-        name: 'batch_not_supported',
-        message: `Model '${model.modelId}' does not support batching`,
-      });
-    }
-
     const availableBatches = await findAvailableBatches(options);
 
     return availableBatches.map(batch => ({
@@ -94,8 +97,12 @@ export function getInfiniteBatch<CURSOR>({
     }));
   }
 
-  async function* consumeAvailableResponses(): AsyncIterableIterator<BatchResponse> {
-    for (const { consumeResponses } of await consumeAvailableBatches()) {
+  async function* consumeAvailableResponses(): AsyncIterableIterator<
+    BatchResponse<MODEL, TOOLS, OUTPUT>
+  > {
+    const batchesToConsume = await consumeAvailableBatches();
+
+    for (const { consumeResponses } of batchesToConsume) {
       for await (const response of consumeResponses) {
         yield response;
       }
@@ -104,6 +111,24 @@ export function getInfiniteBatch<CURSOR>({
 
   return {
     async pushRequest(request, options) {
+      if (batchBuilder && !batchBuilder.accepts(request)) {
+        const batch = await batchBuilder.submit({
+          ...options,
+          metadata: {
+            cursor: options?.cursor,
+          },
+        });
+
+        if (store.createBatch) {
+          await store.createBatch(
+            batch as Batch<InfiniteBatchMetadata<CURSOR>>,
+            options,
+          );
+        }
+
+        batchBuilder = undefined;
+      }
+
       if (!batchBuilder) {
         batchBuilder = createBatchBuilder({
           model,
@@ -114,26 +139,8 @@ export function getInfiniteBatch<CURSOR>({
       }
 
       batchBuilder.pushRequest(request);
-
-      if (batchBuilder.isFull()) {
-        const batch = await batchBuilder.submit({
-          ...options,
-          metadata: {
-            cursor: options?.cursor,
-          },
-        });
-
-        await store.createBatch?.(
-          batch as Batch<InfiniteBatchMetadata<CURSOR>>,
-          options,
-        );
-
-        batchBuilder = undefined;
-      }
     },
 
-    findAvailableBatches,
-    consumeAvailableBatches,
     consumeAvailableResponses,
   };
 }

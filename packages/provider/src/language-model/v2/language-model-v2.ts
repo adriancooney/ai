@@ -134,27 +134,4 @@ Response headers.
       headers?: SharedV2Headers;
     };
   }>;
-
-  doGetBatchStatus?(options: {
-    batchId: string;
-    abortSignal?: AbortSignal;
-  }): Promise<
-    { status: 'pending' | 'ready' } | { status: 'error'; error: string }
-  >;
-
-  doGetBatchResults?(options: {
-    batchId: string;
-    abortSignal?: AbortSignal;
-  }): AsyncIterableIterator<{ id: string; data: unknown }>;
-
-  doCreateBatch?(options: {
-    metadata: unknown;
-    requests: { id: string; data: unknown }[];
-    abortSignal?: AbortSignal;
-  }): Promise<{ batchId: string }>;
-
-  doDeleteBatch?(options: {
-    batchId: string;
-    abortSignal?: AbortSignal;
-  }): Promise<void>;
 };
