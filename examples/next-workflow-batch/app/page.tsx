@@ -2,6 +2,8 @@ import { google } from "@ai-sdk/google";
 import { start } from "workflow/api";
 import { generate } from "./generate/generate";
 
+export const dynamic = "force-dynamic"
+
 export default async function Page() {
   const batches = (await google.languageModel("gemini-2.5-flash-lite").doListBatches?.()) || []
 
