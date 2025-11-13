@@ -20,11 +20,11 @@ export function createBatchBuilder<MODEL extends BatchModelV1>({
   metadata?: BatchMetadata;
 }): BatchBuilder<MODEL> {
   let requests: BatchRequest<MODEL>[] = [];
-  const meters = createBatchMeters(model.batchPolicy);
+  const meters = createBatchMeters(model);
 
   return {
     accepts(request) {
-      return meters.accepts(model.measureBatchRequest(request));
+      return meters.isRequestAcceptable(request);
     },
 
     pushRequest(request) {
@@ -37,7 +37,7 @@ export function createBatchBuilder<MODEL extends BatchModelV1>({
         });
       }
 
-      meters.commit(model.measureBatchRequest(request));
+      meters.commitRequest(request);
       requests.push(request);
     },
 

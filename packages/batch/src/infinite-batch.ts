@@ -1,9 +1,10 @@
 import { BatchModelV1 } from '@ai-sdk/provider';
-import { Batch, BatchRequest, BatchResponse } from './types';
+import { Batch, BatchBufferer, BatchRequest, BatchResponse } from './types';
 import { consumeBatchResults } from './batch';
 import { type BatchBuilder, createBatchBuilder } from './batch-builder';
 import { ToolSet, Output } from 'ai';
 import { createProviderInfiniteBatchStore } from './provider-infinite-batch-store';
+import { createMemoryBatchBufferer } from './bufferers/memory-batch-bufferer';
 
 export interface InfiniteBatch<
   CURSOR,
@@ -42,6 +43,7 @@ export type InfiniteBatchOptions<CURSOR, MODEL extends BatchModelV1> = {
   key: string;
   model: MODEL;
   store?: InfiniteBatchStore<CURSOR>;
+  bufferer?: BatchBufferer;
 };
 
 export function getInfiniteBatch<
@@ -53,6 +55,7 @@ export function getInfiniteBatch<
   key: groupKey,
   model,
   store: inputStore,
+  bufferer: inputBufferer,
 }: InfiniteBatchOptions<CURSOR, MODEL>): InfiniteBatch<
   CURSOR,
   MODEL,
@@ -60,7 +63,7 @@ export function getInfiniteBatch<
   OUTPUT
 > {
   const store = inputStore || createProviderInfiniteBatchStore<CURSOR>(model);
-  let batchBuilder: BatchBuilder<MODEL> | undefined;
+  const bufferer = inputBufferer || createMemoryBatchBufferer();
 
   async function findAvailableBatches(options?: {
     abortSignal?: AbortSignal;
@@ -111,34 +114,7 @@ export function getInfiniteBatch<
 
   return {
     async pushRequest(request, options) {
-      if (batchBuilder && !batchBuilder.accepts(request)) {
-        const batch = await batchBuilder.submit({
-          ...options,
-          metadata: {
-            cursor: options?.cursor,
-          },
-        });
-
-        if (store.createBatch) {
-          await store.createBatch(
-            batch as Batch<InfiniteBatchMetadata<CURSOR>>,
-            options,
-          );
-        }
-
-        batchBuilder = undefined;
-      }
-
-      if (!batchBuilder) {
-        batchBuilder = createBatchBuilder({
-          model,
-          metadata: {
-            groupKey,
-          },
-        });
-      }
-
-      batchBuilder.pushRequest(request);
+      bufferer.pushRequest(model, groupKey, request, options);
     },
 
     consumeAvailableResponses,

@@ -1,41 +1,74 @@
-import { AISDKError, BatchMeters, BatchPolicy } from '@ai-sdk/provider';
+import {
+  AISDKError,
+  BatchMetersState,
+  BatchModelV1,
+  BatchPolicy,
+  BatchPolicyOfModel,
+} from '@ai-sdk/provider';
+import { BatchRequest } from './types';
 
-export function createBatchMeters<POLICY extends BatchPolicy>(policy: POLICY) {
-  let currentMeters = {} satisfies BatchMeters<POLICY>;
+export interface BatchMeters<MODEL extends BatchModelV1> {
+  getBatchMetersState(): BatchMetersState<BatchPolicyOfModel<MODEL>>;
+  isRequestAcceptable(request: BatchRequest<MODEL>): boolean;
+  commitRequest(
+    request: BatchRequest<MODEL>,
+  ): BatchMetersState<BatchPolicyOfModel<MODEL>>;
+}
 
-  function accepts(meters: BatchMeters<POLICY>): boolean {
-    const nextMeters = addMeters(policy, currentMeters, meters);
+export function createBatchMeters<MODEL extends BatchModelV1>(
+  model: MODEL,
+  initialBatchMetersState?: BatchMetersState<BatchPolicyOfModel<MODEL>>,
+): BatchMeters<MODEL> {
+  let currentBatchMetersState =
+    initialBatchMetersState ??
+    ({} satisfies BatchMetersState<BatchPolicyOfModel<MODEL>>);
 
-    return Object.keys(policy.limits).every(
-      meterName => (nextMeters[meterName] ?? 0) <= policy.limits[meterName],
+  function isRequestAcceptable(request: BatchRequest<MODEL>): boolean {
+    const nextMeters = addMeters(
+      model.batchPolicy,
+      currentBatchMetersState,
+      model.measureBatchRequest(request),
+    );
+
+    return Object.keys(model.batchPolicy.limits).every(
+      meterName =>
+        (nextMeters[meterName] ?? 0) <= model.batchPolicy.limits[meterName],
     );
   }
 
   return {
-    accepts,
+    getBatchMetersState: () => currentBatchMetersState,
 
-    commit(meters: BatchMeters<POLICY>) {
-      if (!accepts(meters)) {
+    isRequestAcceptable,
+
+    commitRequest(request: BatchRequest<MODEL>) {
+      if (!isRequestAcceptable(request)) {
         throw new AISDKError({
           name: 'batch_policy_exceeded',
           message: `Cannot commit batch meters, exceeds batch policy`,
         });
       }
 
-      currentMeters = addMeters(policy, currentMeters, meters);
+      currentBatchMetersState = addMeters(
+        model.batchPolicy,
+        currentBatchMetersState,
+        model.measureBatchRequest(request),
+      );
+
+      return currentBatchMetersState;
     },
   };
 }
 
 function addMeters<POLICY extends BatchPolicy>(
   policy: POLICY,
-  meterA: BatchMeters<POLICY>,
-  meterB: BatchMeters<POLICY>,
-): BatchMeters<POLICY> {
+  meterA: BatchMetersState<POLICY>,
+  meterB: BatchMetersState<POLICY>,
+): BatchMetersState<POLICY> {
   return Object.fromEntries(
     Object.keys(policy.limits).map(meterName => [
       meterName,
       (meterA[meterName] ?? 0) + (meterB[meterName] ?? 0),
     ]),
-  ) as BatchMeters<POLICY>;
+  ) as BatchMetersState<POLICY>;
 }

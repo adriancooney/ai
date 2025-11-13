@@ -1,8 +1,9 @@
-import { summarizeBatch, summarizeBatchHook } from '../summarize/summarize';
+import { resumeHook } from 'workflow/api';
+import { batch } from '../generate/generate';
 
 export async function GET() {
-  for await (const response of summarizeBatch.consumeAvailableResponses()) {
-    summarizeBatchHook.resume(response.id, response);
+  for await (const response of batch.consumeAvailableResponses()) {
+    resumeHook(response.id, response);
   }
 
   return new Response('OK');

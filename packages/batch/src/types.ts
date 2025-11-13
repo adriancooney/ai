@@ -51,3 +51,12 @@ export type InferBatchResponse<IF extends InfiniteBatch<any, any, any, any>> =
   IF extends InfiniteBatch<any, infer M, infer T, infer O>
     ? BatchResponse<M, T, O>
     : never;
+
+export interface BatchBufferer {
+  pushRequest<MODEL extends BatchModelV1>(
+    model: MODEL,
+    batchId: string,
+    request: BatchRequest<MODEL>,
+    options?: { abortSignal?: AbortSignal },
+  ): Promise<void>;
+}
