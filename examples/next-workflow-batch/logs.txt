@@ -1,0 +1,3263 @@
+
+> next-workflow-batch@0.1.0 dev /Users/adrian/Code/ai/examples/next-workflow-batch
+> next dev
+
+Discovering workflow directives 225ms
+Created steps bundle 37ms
+✘ [ERROR] Cannot use Node.js module "node:module" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/@workflow+core@4.0.1-beta.10_@aws-sdk+client-sts@3.662.0_@opentelemetry+api@1.9.0/node_modules/@workflow/core/dist/runtime/world.js:1:30:
+      1 │ import { createRequire } from "node:module";
+        ╵                               ~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:util" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/@workflow+core@4.0.1-beta.10_@aws-sdk+client-sts@3.662.0_@opentelemetry+api@1.9.0/node_modules/@workflow/core/dist/types.js:1:22:
+      1 │ import { types } from "node:util";
+        ╵                       ~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:path" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/@workflow+core@4.0.1-beta.10_@aws-sdk+client-sts@3.662.0_@opentelemetry+api@1.9.0/node_modules/@workflow/core/dist/runtime/world.js:2:17:
+      2 │ import Path from "node:path";
+        ╵                  ~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:async_hooks" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/@workflow+core@4.0.1-beta.10_@aws-sdk+client-sts@3.662.0_@opentelemetry+api@1.9.0/node_modules/@workflow/core/dist/step/context-storage.js:1:34:
+      1 │ import { AsyncLocalStorage } from "node:async_hooks";
+        ╵                                   ~~~~~~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:vm" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/@workflow+core@4.0.1-beta.10_@aws-sdk+client-sts@3.662.0_@opentelemetry+api@1.9.0/node_modules/@workflow/core/dist/workflow.js:1:29:
+      1 │ import { runInContext } from "node:vm";
+        ╵                              ~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:process" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/pid-port@2.0.0/node_modules/pid-port/index.js:1:20:
+      1 │ import process from "node:process";
+        ╵                     ~~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "tty" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/debug@4.4.3_supports-color@9.4.0/node_modules/debug/src/node.js:3:24:
+      3 │  */ const tty = require('tty');
+        ╵                         ~~~~~
+
+✘ [ERROR] Cannot use Node.js module "util" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/debug@4.4.3_supports-color@9.4.0/node_modules/debug/src/node.js:4:21:
+      4 │ const util = require('util');
+        ╵                      ~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:events" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/@workflow+world-local@4.0.1-beta.6_@opentelemetry+api@1.9.0/node_modules/@workflow/world-local/dist/streamer.js:1:29:
+      1 │ import { EventEmitter } from "node:events";
+        ╵                              ~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:path" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/@workflow+world-local@4.0.1-beta.6_@opentelemetry+api@1.9.0/node_modules/@workflow/world-local/dist/streamer.js:2:17:
+      2 │ import path from "node:path";
+        ╵                  ~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:timers/promises" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/@workflow+world-local@4.0.1-beta.6_@opentelemetry+api@1.9.0/node_modules/@workflow/world-local/dist/queue.js:1:27:
+      1 │ import { setTimeout } from "node:timers/promises";
+        ╵                            ~~~~~~~~~~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:path" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/@workflow+world-local@4.0.1-beta.6_@opentelemetry+api@1.9.0/node_modules/@workflow/world-local/dist/storage.js:1:17:
+      1 │ import path from "node:path";
+        ╵                  ~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:fs" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/@workflow+world-local@4.0.1-beta.6_@opentelemetry+api@1.9.0/node_modules/@workflow/world-local/dist/fs.js:1:31:
+      1 │ import { promises as fs } from "node:fs";
+        ╵                                ~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:path" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/@workflow+world-local@4.0.1-beta.6_@opentelemetry+api@1.9.0/node_modules/@workflow/world-local/dist/fs.js:2:17:
+      2 │ import path from "node:path";
+        ╵                  ~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:process" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/execa@9.6.0/node_modules/execa/lib/methods/node.js:1:35:
+      1 │ import { execPath, execArgv } from "node:process";
+        ╵                                    ~~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:path" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/execa@9.6.0/node_modules/execa/lib/methods/node.js:2:17:
+      2 │ import path from "node:path";
+        ╵                  ~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:process" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/execa@9.6.0/node_modules/execa/lib/ipc/methods.js:1:20:
+      1 │ import process from "node:process";
+        ╵                     ~~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:crypto" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/nanoid@5.1.6/node_modules/nanoid/index.js:1:36:
+      1 │ import { webcrypto as crypto } from "node:crypto";
+        ╵                                     ~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:vm" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/@workflow+core@4.0.1-beta.10_@aws-sdk+client-sts@3.662.0_@opentelemetry+api@1.9.0/node_modules/@workflow/core/dist/vm/index.js:1:63:
+      1 │ ... { runInContext, createContext as vmCreateContext } from "node:vm";
+        ╵                                                             ~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:child_process" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/execa@9.6.0/node_modules/execa/lib/methods/template.js:1:29:
+      1 │ import { ChildProcess } from "node:child_process";
+        ╵                              ~~~~~~~~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:url" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/execa@9.6.0/node_modules/execa/lib/arguments/file-url.js:1:30:
+      1 │ import { fileURLToPath } from "node:url";
+        ╵                               ~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:child_process" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/execa@9.6.0/node_modules/execa/lib/methods/main-sync.js:1:26:
+      1 │ import { spawnSync } from "node:child_process";
+        ╵                           ~~~~~~~~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:events" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/execa@9.6.0/node_modules/execa/lib/methods/main-async.js:1:32:
+      1 │ import { setMaxListeners } from "node:events";
+        ╵                                 ~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:child_process" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/execa@9.6.0/node_modules/execa/lib/methods/main-async.js:2:22:
+      2 │ import { spawn } from "node:child_process";
+        ╵                       ~~~~~~~~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:buffer" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/undici@6.22.0/node_modules/undici/index.js:105:49:
+      105 │ ...le.exports.File = globalThis.File ?? require('node:buffer').File;
+          ╵                                                 ~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:timers/promises" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/execa@9.6.0/node_modules/execa/lib/ipc/graceful.js:1:26:
+      1 │ import { scheduler } from "node:timers/promises";
+        ╵                           ~~~~~~~~~~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:util" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/execa@9.6.0/node_modules/execa/lib/ipc/send.js:1:26:
+      1 │ import { promisify } from "node:util";
+        ╵                           ~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:events" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/execa@9.6.0/node_modules/execa/lib/ipc/get-one.js:1:25:
+      1 │ import { once, on } from "node:events";
+        ╵                          ~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:events" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/execa@9.6.0/node_modules/execa/lib/ipc/get-each.js:1:25:
+      1 │ import { once, on } from "node:events";
+        ╵                          ~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:string_decoder" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/execa@9.6.0/node_modules/execa/lib/utils/uint-array.js:1:30:
+      1 │ import { StringDecoder } from "node:string_decoder";
+        ╵                               ~~~~~~~~~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:util" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/execa@9.6.0/node_modules/execa/lib/arguments/specific.js:1:25:
+      1 │ import { debuglog } from "node:util";
+        ╵                          ~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:path" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/execa@9.6.0/node_modules/execa/lib/arguments/options.js:1:17:
+      1 │ import path from "node:path";
+        ╵                  ~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:process" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/execa@9.6.0/node_modules/execa/lib/arguments/options.js:2:20:
+      2 │ import process from "node:process";
+        ╵                     ~~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:fs" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/execa@9.6.0/node_modules/execa/lib/stdio/handle-sync.js:1:29:
+      1 │ import { readFileSync } from "node:fs";
+        ╵                              ~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:fs" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/execa@9.6.0/node_modules/execa/lib/io/output-sync.js:1:46:
+      1 │ import { writeFileSync, appendFileSync } from "node:fs";
+        ╵                                               ~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:events" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/undici@6.22.0/node_modules/undici/lib/dispatcher/dispatcher.js:2:29:
+      2 │ const EventEmitter = require('node:events');
+        ╵                              ~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:assert" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/undici@6.22.0/node_modules/undici/lib/dispatcher/client.js:3:23:
+      3 │ const assert = require('node:assert');
+        ╵                        ~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:net" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/undici@6.22.0/node_modules/undici/lib/dispatcher/client.js:4:20:
+      4 │ const net = require('node:net');
+        ╵                     ~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:http" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/undici@6.22.0/node_modules/undici/lib/dispatcher/client.js:5:21:
+      5 │ const http = require('node:http');
+        ╵                      ~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:util" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/undici@6.22.0/node_modules/undici/lib/mock/mock-client.js:2:30:
+      2 │ const { promisify } = require('node:util');
+        ╵                               ~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:net" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/undici@6.22.0/node_modules/undici/lib/core/connect.js:2:20:
+      2 │ const net = require('node:net');
+        ╵                     ~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:assert" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/undici@6.22.0/node_modules/undici/lib/core/util.js:2:23:
+      2 │ const assert = require('node:assert');
+        ╵                        ~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:assert" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/undici@6.22.0/node_modules/undici/lib/core/connect.js:3:23:
+      3 │ const assert = require('node:assert');
+        ╵                        ~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:util" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/undici@6.22.0/node_modules/undici/lib/mock/mock-pool.js:2:30:
+      2 │ const { promisify } = require('node:util');
+        ╵                               ~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:http" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/undici@6.22.0/node_modules/undici/lib/core/util.js:4:36:
+      4 │ const { IncomingMessage } = require('node:http');
+        ╵                                     ~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:stream" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/undici@6.22.0/node_modules/undici/lib/core/util.js:5:23:
+      5 │ const stream = require('node:stream');
+        ╵                        ~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:net" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/undici@6.22.0/node_modules/undici/lib/core/util.js:6:20:
+      6 │ const net = require('node:net');
+        ╵                     ~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:tls" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/undici@6.22.0/node_modules/undici/lib/core/connect.js:81:30:
+      81 │                 tls = require('node:tls');
+         ╵                               ~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:buffer" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/undici@6.22.0/node_modules/undici/lib/core/util.js:7:25:
+      7 │ const { Blob } = require('node:buffer');
+        ╵                          ~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:util" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/undici@6.22.0/node_modules/undici/lib/core/util.js:8:25:
+      8 │ const nodeUtil = require('node:util');
+        ╵                          ~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:querystring" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/undici@6.22.0/node_modules/undici/lib/core/util.js:9:30:
+      9 │ const { stringify } = require('node:querystring');
+        ╵                               ~~~~~~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:events" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/undici@6.22.0/node_modules/undici/lib/core/util.js:10:37:
+      10 │ const { EventEmitter: EE } = require('node:events');
+         ╵                                      ~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:assert" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/undici@6.22.0/node_modules/undici/lib/handler/retry-handler.js:2:23:
+      2 │ const assert = require('node:assert');
+        ╵                        ~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:url" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/undici@6.22.0/node_modules/undici/lib/dispatcher/proxy-agent.js:3:24:
+      3 │ const { URL } = require('node:url');
+        ╵                         ~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:util" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/undici@6.22.0/node_modules/undici/lib/web/fetch/response.js:5:25:
+      5 │ const nodeUtil = require('node:util');
+        ╵                          ~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:assert" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/undici@6.22.0/node_modules/undici/lib/web/fetch/headers.js:7:23:
+      7 │ const assert = require('node:assert');
+        ╵                        ~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:util" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/undici@6.22.0/node_modules/undici/lib/web/fetch/headers.js:8:21:
+      8 │ const util = require('node:util');
+        ╵                      ~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:assert" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/undici@6.22.0/node_modules/undici/lib/web/fetch/response.js:14:23:
+      14 │ const assert = require('node:assert');
+         ╵                        ~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:assert" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/undici@6.22.0/node_modules/undici/lib/handler/redirect-handler.js:4:23:
+      4 │ const assert = require('node:assert');
+        ╵                        ~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:events" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/undici@6.22.0/node_modules/undici/lib/handler/redirect-handler.js:6:19:
+      6 │ const EE = require('node:events');
+        ╵                    ~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:util" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/undici@6.22.0/node_modules/undici/lib/web/fetch/request.js:6:25:
+      6 │ const nodeUtil = require('node:util');
+        ╵                          ~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:child_process" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/execa@9.6.0/node_modules/execa/lib/return/early-error.js:1:29:
+      1 │ import { ChildProcess } from "node:child_process";
+        ╵                              ~~~~~~~~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:stream" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/execa@9.6.0/node_modules/execa/lib/return/early-error.js:2:56:
+      2 │ import { PassThrough, Readable, Writable, Duplex } from "node:stream";
+        ╵                                                         ~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:buffer" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/undici@6.22.0/node_modules/undici/lib/web/fetch/formdata.js:7:37:
+      7 │ const { File: NativeFile } = require('node:buffer');
+        ╵                                      ~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:zlib" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/undici@6.22.0/node_modules/undici/lib/web/fetch/index.js:6:21:
+      6 │ const zlib = require('node:zlib');
+        ╵                      ~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:util" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/undici@6.22.0/node_modules/undici/lib/web/fetch/formdata.js:8:25:
+      8 │ const nodeUtil = require('node:util');
+        ╵                          ~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:fs" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/execa@9.6.0/node_modules/execa/lib/stdio/handle-async.js:1:52:
+      1 │ import { createReadStream, createWriteStream } from "node:fs";
+        ╵                                                     ~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:buffer" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/execa@9.6.0/node_modules/execa/lib/stdio/handle-async.js:2:23:
+      2 │ import { Buffer } from "node:buffer";
+        ╵                        ~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:assert" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/undici@6.22.0/node_modules/undici/lib/web/fetch/request.js:14:23:
+      14 │ const assert = require('node:assert');
+         ╵                        ~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:assert" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/undici@6.22.0/node_modules/undici/lib/web/fetch/index.js:9:23:
+      9 │ const assert = require('node:assert');
+        ╵                        ~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:stream" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/execa@9.6.0/node_modules/execa/lib/stdio/handle-async.js:3:43:
+      3 │ import { Readable, Writable, Duplex } from "node:stream";
+        ╵                                            ~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:events" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/undici@6.22.0/node_modules/undici/lib/web/fetch/request.js:15:93:
+      15 │ ...getEventListeners, defaultMaxListeners } = require('node:events');
+         ╵                                                       ~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:events" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/undici@6.22.0/node_modules/undici/lib/web/fetch/index.js:12:19:
+      12 │ const EE = require('node:events');
+         ╵                    ~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:stream" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/undici@6.22.0/node_modules/undici/lib/web/eventsource/eventsource.js:2:29:
+      2 │ const { pipeline } = require('node:stream');
+        ╵                              ~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:stream" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/undici@6.22.0/node_modules/undici/lib/web/fetch/index.js:13:49:
+      13 │ const { Readable, pipeline, finished } = require('node:stream');
+         ╵                                                  ~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:events" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/execa@9.6.0/node_modules/execa/lib/terminate/cleanup.js:1:33:
+      1 │ import { addAbortListener } from "node:events";
+        ╵                                  ~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:events" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/execa@9.6.0/node_modules/execa/lib/ipc/forward.js:1:29:
+      1 │ import { EventEmitter } from "node:events";
+        ╵                              ~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:worker_threads" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/undici@6.22.0/node_modules/undici/lib/web/websocket/events.js:5:32:
+      5 │ const { MessagePort } = require('node:worker_threads');
+        ╵                                 ~~~~~~~~~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:timers/promises" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/execa@9.6.0/node_modules/execa/lib/terminate/kill.js:1:27:
+      1 │ import { setTimeout } from "node:timers/promises";
+        ╵                            ~~~~~~~~~~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:http" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/undici@6.22.0/node_modules/undici/lib/web/fetch/index.js:17:33:
+      17 │ const { STATUS_CODES } = require('node:http');
+         ╵                                  ~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:events" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/get-stream@9.0.1/node_modules/get-stream/source/index.js:1:19:
+      1 │ import { on } from "node:events";
+        ╵                    ~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:buffer" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/undici@6.22.0/node_modules/undici/lib/web/fetch/index.js:588:47:
+      588 │ ...      resolveObjectURL = require('node:buffer').resolveObjectURL;
+          ╵                                     ~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:stream/promises" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/get-stream@9.0.1/node_modules/get-stream/source/index.js:2:25:
+      2 │ import { finished } from "node:stream/promises";
+        ╵                          ~~~~~~~~~~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:events" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/execa@9.6.0/node_modules/execa/lib/resolve/wait-subprocess.js:1:21:
+      1 │ import { once } from "node:events";
+        ╵                      ~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:assert" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/undici@6.22.0/node_modules/undici/lib/web/fetch/data-url.js:2:23:
+      2 │ const assert = require('node:assert');
+        ╵                        ~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:net" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/undici@6.22.0/node_modules/undici/lib/interceptor/dns.js:2:25:
+      2 │ const { isIP } = require('node:net');
+        ╵                          ~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:util" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/undici@6.22.0/node_modules/undici/lib/web/websocket/websocket.js:12:26:
+      12 │ const { types } = require('node:util');
+         ╵                           ~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:events" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/execa@9.6.0/node_modules/execa/lib/ipc/strict.js:1:21:
+      1 │ import { once } from "node:events";
+        ╵                      ~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:dns" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/undici@6.22.0/node_modules/undici/lib/interceptor/dns.js:3:27:
+      3 │ const { lookup } = require('node:dns');
+        ╵                            ~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "crypto" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/seedrandom@3.0.5/node_modules/seedrandom/seedrandom.js:219:33:
+      219 │             nodecrypto = require('crypto');
+          ╵                                  ~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:os" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/execa@9.6.0/node_modules/execa/lib/terminate/signal.js:1:26:
+      1 │ import { constants } from "node:os";
+        ╵                           ~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:process" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/execa@9.6.0/node_modules/execa/lib/utils/standard-stream.js:1:20:
+      1 │ import process from "node:process";
+        ╵                     ~~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:process" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/execa@9.6.0/node_modules/execa/lib/return/duration.js:1:23:
+      1 │ import { hrtime } from "node:process";
+        ╵                        ~~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:util" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/execa@9.6.0/node_modules/execa/lib/return/message.js:1:24:
+      1 │ import { inspect } from "node:util";
+        ╵                         ~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:events" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/execa@9.6.0/node_modules/execa/lib/resolve/exit-async.js:1:21:
+      1 │ import { once } from "node:events";
+        ╵                      ~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:process" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/execa@9.6.0/node_modules/execa/lib/arguments/escape.js:1:25:
+      1 │ import { platform } from "node:process";
+        ╵                          ~~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:stream" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/execa@9.6.0/node_modules/execa/lib/transform/generator.js:1:51:
+      1 │ import { Transform, getDefaultHighWaterMark } from "node:stream";
+        ╵                                                    ~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:util" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/execa@9.6.0/node_modules/execa/lib/arguments/escape.js:2:41:
+      2 │ import { stripVTControlCharacters } from "node:util";
+        ╵                                          ~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:assert" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/undici@6.22.0/node_modules/undici/lib/api/api-connect.js:2:23:
+      2 │ const assert = require('node:assert');
+        ╵                        ~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:async_hooks" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/undici@6.22.0/node_modules/undici/lib/api/api-connect.js:3:34:
+      3 │ const { AsyncResource } = require('node:async_hooks');
+        ╵                                   ~~~~~~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:stream" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/undici@6.22.0/node_modules/undici/lib/api/api-pipeline.js:2:50:
+      2 │ const { Readable, Duplex, PassThrough } = require('node:stream');
+        ╵                                                   ~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "child_process" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/cross-spawn@7.0.6/node_modules/cross-spawn/index.js:2:19:
+      2 │ const cp = require('child_process');
+        ╵                    ~~~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:async_hooks" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/undici@6.22.0/node_modules/undici/lib/api/api-upgrade.js:3:34:
+      3 │ const { AsyncResource } = require('node:async_hooks');
+        ╵                                   ~~~~~~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:timers/promises" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/execa@9.6.0/node_modules/execa/lib/terminate/timeout.js:1:27:
+      1 │ import { setTimeout } from "node:timers/promises";
+        ╵                            ~~~~~~~~~~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:assert" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/undici@6.22.0/node_modules/undici/lib/api/api-request.js:2:23:
+      2 │ const assert = require('node:assert');
+        ╵                        ~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:assert" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/undici@6.22.0/node_modules/undici/lib/api/api-stream.js:2:23:
+      2 │ const assert = require('node:assert');
+        ╵                        ~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:stream" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/undici@6.22.0/node_modules/undici/lib/api/api-stream.js:3:42:
+      3 │ const { finished, PassThrough } = require('node:stream');
+        ╵                                           ~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:async_hooks" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/undici@6.22.0/node_modules/undici/lib/api/api-pipeline.js:5:34:
+      5 │ const { AsyncResource } = require('node:async_hooks');
+        ╵                                   ~~~~~~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:assert" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/undici@6.22.0/node_modules/undici/lib/api/api-upgrade.js:6:23:
+      6 │ const assert = require('node:assert');
+        ╵                        ~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:assert" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/undici@6.22.0/node_modules/undici/lib/api/api-pipeline.js:7:23:
+      7 │ const assert = require('node:assert');
+        ╵                        ~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:fs" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/execa@9.6.0/node_modules/execa/lib/arguments/cwd.js:1:25:
+      1 │ import { statSync } from "node:fs";
+        ╵                          ~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:path" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/execa@9.6.0/node_modules/execa/lib/arguments/cwd.js:2:17:
+      2 │ import path from "node:path";
+        ╵                  ~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:async_hooks" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/undici@6.22.0/node_modules/undici/lib/api/api-stream.js:7:34:
+      7 │ const { AsyncResource } = require('node:async_hooks');
+        ╵                                   ~~~~~~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:async_hooks" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/undici@6.22.0/node_modules/undici/lib/api/api-request.js:7:34:
+      7 │ const { AsyncResource } = require('node:async_hooks');
+        ╵                                   ~~~~~~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:process" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/execa@9.6.0/node_modules/execa/lib/arguments/cwd.js:3:20:
+      3 │ import process from "node:process";
+        ╵                     ~~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:v8" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/execa@9.6.0/node_modules/execa/lib/ipc/ipc-input.js:1:26:
+      1 │ import { serialize } from "node:v8";
+        ╵                           ~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:process" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/npm-run-path@6.0.0/node_modules/npm-run-path/index.js:1:20:
+      1 │ import process from "node:process";
+        ╵                     ~~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:path" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/npm-run-path@6.0.0/node_modules/npm-run-path/index.js:2:17:
+      2 │ import path from "node:path";
+        ╵                  ~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:diagnostics_channel" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/undici@6.22.0/node_modules/undici/lib/core/diagnostics.js:2:35:
+      2 │ const diagnosticsChannel = require('node:diagnostics_channel');
+        ╵                                    ~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:util" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/undici@6.22.0/node_modules/undici/lib/core/diagnostics.js:3:21:
+      3 │ const util = require('node:util');
+        ╵                      ~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:assert" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/undici@6.22.0/node_modules/undici/lib/core/request.js:3:23:
+      3 │ const assert = require('node:assert');
+        ╵                        ~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:stream" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/undici@6.22.0/node_modules/undici/lib/mock/pending-interceptors-formatter.js:2:30:
+      2 │ const { Transform } = require('node:stream');
+        ╵                               ~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:console" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/undici@6.22.0/node_modules/undici/lib/mock/pending-interceptors-formatter.js:3:28:
+      3 │ const { Console } = require('node:console');
+        ╵                             ~~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:assert" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/undici@6.22.0/node_modules/undici/lib/dispatcher/client-h2.js:2:23:
+      2 │ const assert = require('node:assert');
+        ╵                        ~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:stream" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/undici@6.22.0/node_modules/undici/lib/dispatcher/client-h2.js:3:29:
+      3 │ const { pipeline } = require('node:stream');
+        ╵                              ~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:http" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/undici@6.22.0/node_modules/undici/lib/mock/mock-utils.js:5:33:
+      5 │ const { STATUS_CODES } = require('node:http');
+        ╵                                  ~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:util" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/undici@6.22.0/node_modules/undici/lib/mock/mock-utils.js:6:41:
+      6 │ const { types: { isPromise } } = require('node:util');
+        ╵                                          ~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:http2" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/undici@6.22.0/node_modules/undici/lib/dispatcher/client-h2.js:13:20:
+      13 │     http2 = require('node:http2');
+         ╵                     ~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:assert" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/undici@6.22.0/node_modules/undici/lib/dispatcher/client-h1.js:2:48:
+      2 │ /* global WebAssembly */ const assert = require('node:assert');
+        ╵                                                 ~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:util" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/undici@6.22.0/node_modules/undici/lib/web/fetch/webidl.js:2:35:
+      2 │ const { types, inspect } = require('node:util');
+        ╵                                    ~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:worker_threads" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/undici@6.22.0/node_modules/undici/lib/web/fetch/webidl.js:3:38:
+      3 │ const { markAsUncloneable } = require('node:worker_threads');
+        ╵                                       ~~~~~~~~~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:buffer" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/undici@6.22.0/node_modules/undici/lib/web/fetch/body.js:7:25:
+      7 │ const { Blob } = require('node:buffer');
+        ╵                          ~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:assert" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/undici@6.22.0/node_modules/undici/lib/web/fetch/body.js:8:23:
+      8 │ const assert = require('node:assert');
+        ╵                        ~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:stream" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/undici@6.22.0/node_modules/undici/lib/web/fetch/body.js:9:43:
+      9 │ const { isErrored, isDisturbed } = require('node:stream');
+        ╵                                            ~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:util/types" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/undici@6.22.0/node_modules/undici/lib/web/fetch/body.js:10:34:
+      10 │ const { isArrayBuffer } = require('node:util/types');
+         ╵                                   ~~~~~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:crypto" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/undici@6.22.0/node_modules/undici/lib/web/fetch/body.js:15:27:
+      15 │     const crypto = require('node:crypto');
+         ╵                            ~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:buffer" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/undici@6.22.0/node_modules/undici/lib/web/fetch/file.js:2:31:
+      2 │ const { Blob, File } = require('node:buffer');
+        ╵                                ~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:util" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/undici@6.22.0/node_modules/undici/lib/web/fileapi/util.js:6:26:
+      6 │ const { types } = require('node:util');
+        ╵                           ~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "string_decoder" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/undici@6.22.0/node_modules/undici/lib/web/fileapi/util.js:7:34:
+      7 │ const { StringDecoder } = require('string_decoder');
+        ╵                                   ~~~~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:assert" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/undici@6.22.0/node_modules/undici/lib/web/cookies/parse.js:5:23:
+      5 │ const assert = require('node:assert');
+        ╵                        ~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:buffer" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/undici@6.22.0/node_modules/undici/lib/web/fileapi/util.js:8:25:
+      8 │ const { btoa } = require('node:buffer');
+        ╵                          ~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:stream" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/undici@6.22.0/node_modules/undici/lib/web/fetch/util.js:2:30:
+      2 │ const { Transform } = require('node:stream');
+        ╵                               ~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:zlib" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/undici@6.22.0/node_modules/undici/lib/web/fetch/util.js:3:21:
+      3 │ const zlib = require('node:zlib');
+        ╵                      ~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:events" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/execa@9.6.0/node_modules/execa/lib/ipc/incoming.js:1:21:
+      1 │ import { once } from "node:events";
+        ╵                      ~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:perf_hooks" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/undici@6.22.0/node_modules/undici/lib/web/fetch/util.js:7:32:
+      7 │ const { performance } = require('node:perf_hooks');
+        ╵                                 ~~~~~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:events" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/@sindresorhus+merge-streams@4.0.0/node_modules/@sindresorhus/merge-streams/index.js:1:25:
+      1 │ import { on, once } from "node:events";
+        ╵                          ~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:timers/promises" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/execa@9.6.0/node_modules/execa/lib/ipc/incoming.js:2:26:
+      2 │ import { scheduler } from "node:timers/promises";
+        ╵                           ~~~~~~~~~~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:stream" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/@sindresorhus+merge-streams@4.0.0/node_modules/@sindresorhus/merge-streams/index.js:2:74:
+      2 │ ...as PassThroughStream, getDefaultHighWaterMark } from "node:stream";
+        ╵                                                         ~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:assert" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/undici@6.22.0/node_modules/undici/lib/web/fetch/util.js:9:23:
+      9 │ const assert = require('node:assert');
+        ╵                        ~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:stream/promises" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/@sindresorhus+merge-streams@4.0.0/node_modules/@sindresorhus/merge-streams/index.js:3:25:
+      3 │ import { finished } from "node:stream/promises";
+        ╵                          ~~~~~~~~~~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:util/types" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/undici@6.22.0/node_modules/undici/lib/web/fetch/util.js:10:33:
+      10 │ const { isUint8Array } = require('node:util/types');
+         ╵                                  ~~~~~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:crypto" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/undici@6.22.0/node_modules/undici/lib/web/fetch/util.js:16:21:
+      16 │     crypto = require('node:crypto');
+         ╵                      ~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:stream" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/undici@6.22.0/node_modules/undici/lib/web/eventsource/eventsource-stream.js:2:30:
+      2 │ const { Transform } = require('node:stream');
+        ╵                               ~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:stream" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/execa@9.6.0/node_modules/execa/lib/convert/duplex.js:1:23:
+      1 │ import { Duplex } from "node:stream";
+        ╵                        ~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:stream" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/execa@9.6.0/node_modules/execa/lib/convert/writable.js:1:25:
+      1 │ import { Writable } from "node:stream";
+        ╵                          ~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:stream" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/execa@9.6.0/node_modules/execa/lib/convert/readable.js:1:25:
+      1 │ import { Readable } from "node:stream";
+        ╵                          ~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:util" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/execa@9.6.0/node_modules/execa/lib/convert/duplex.js:2:28:
+      2 │ import { callbackify } from "node:util";
+        ╵                             ~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:assert" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/undici@6.22.0/node_modules/undici/lib/web/cache/cache.js:11:23:
+      11 │ const assert = require('node:assert');
+         ╵                        ~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:util" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/execa@9.6.0/node_modules/execa/lib/convert/writable.js:2:28:
+      2 │ import { callbackify } from "node:util";
+        ╵                             ~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:util" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/execa@9.6.0/node_modules/execa/lib/convert/readable.js:2:28:
+      2 │ import { callbackify } from "node:util";
+        ╵                             ~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:stream/promises" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/execa@9.6.0/node_modules/execa/lib/io/pipeline.js:1:25:
+      1 │ import { finished } from "node:stream/promises";
+        ╵                          ~~~~~~~~~~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:util" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/execa@9.6.0/node_modules/execa/lib/pipe/abort.js:1:24:
+      1 │ import { aborted } from "node:util";
+        ╵                         ~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:events" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/execa@9.6.0/node_modules/execa/lib/utils/max-listeners.js:1:33:
+      1 │ import { addAbortListener } from "node:events";
+        ╵                                  ~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:buffer" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/undici@6.22.0/node_modules/undici/lib/web/websocket/util.js:5:27:
+      5 │ const { isUtf8 } = require('node:buffer');
+        ╵                            ~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:stream/promises" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/execa@9.6.0/node_modules/execa/lib/pipe/streaming.js:1:25:
+      1 │ import { finished } from "node:stream/promises";
+        ╵                          ~~~~~~~~~~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:events" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/execa@9.6.0/node_modules/execa/lib/utils/abort-signal.js:1:21:
+      1 │ import { once } from "node:events";
+        ╵                      ~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "path" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/cross-spawn@7.0.6/node_modules/cross-spawn/lib/parse.js:2:21:
+      2 │ const path = require('path');
+        ╵                      ~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:stream/promises" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/execa@9.6.0/node_modules/execa/lib/resolve/wait-stream.js:1:25:
+      1 │ import { finished } from "node:stream/promises";
+        ╵                          ~~~~~~~~~~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:timers/promises" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/execa@9.6.0/node_modules/execa/lib/io/contents.js:1:29:
+      1 │ import { setImmediate } from "node:timers/promises";
+        ╵                              ~~~~~~~~~~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:os" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/human-signals@8.0.1/node_modules/human-signals/build/src/main.js:1:26:
+      1 │ import { constants } from "node:os";
+        ╵                           ~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:util" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/execa@9.6.0/node_modules/execa/lib/verbose/log.js:1:24:
+      1 │ import { inspect } from "node:util";
+        ╵                         ~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:buffer" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/execa@9.6.0/node_modules/execa/lib/transform/validate.js:1:23:
+      1 │ import { Buffer } from "node:buffer";
+        ╵                        ~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:buffer" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/execa@9.6.0/node_modules/execa/lib/transform/encoding-transform.js:1:23:
+      1 │ import { Buffer } from "node:buffer";
+        ╵                        ~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:assert" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/undici@6.22.0/node_modules/undici/lib/api/util.js:1:23:
+      1 │ const assert = require('node:assert');
+        ╵                        ~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:string_decoder" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/execa@9.6.0/node_modules/execa/lib/transform/encoding-transform.js:2:30:
+      2 │ import { StringDecoder } from "node:string_decoder";
+        ╵                               ~~~~~~~~~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:stream" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/undici@6.22.0/node_modules/undici/lib/web/websocket/receiver.js:2:29:
+      2 │ const { Writable } = require('node:stream');
+        ╵                              ~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:assert" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/undici@6.22.0/node_modules/undici/lib/web/websocket/receiver.js:3:23:
+      3 │ const assert = require('node:assert');
+        ╵                        ~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:util" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/execa@9.6.0/node_modules/execa/lib/transform/run-async.js:1:28:
+      1 │ import { callbackify } from "node:util";
+        ╵                             ~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:process" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/execa@9.6.0/node_modules/execa/lib/stdio/direction.js:1:20:
+      1 │ import process from "node:process";
+        ╵                     ~~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:crypto" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/undici@6.22.0/node_modules/undici/lib/web/websocket/connection.js:14:21:
+      14 │     crypto = require('node:crypto');
+         ╵                      ~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:fs" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/execa@9.6.0/node_modules/execa/lib/stdio/native.js:1:29:
+      1 │ import { readFileSync } from "node:fs";
+        ╵                              ~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:tty" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/execa@9.6.0/node_modules/execa/lib/stdio/native.js:2:16:
+      2 │ import tty from "node:tty";
+        ╵                 ~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:buffer" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/undici@6.22.0/node_modules/undici/lib/llhttp/llhttp_simd-wasm.js:2:27:
+      2 │ const { Buffer } = require('node:buffer');
+        ╵                            ~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:buffer" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/undici@6.22.0/node_modules/undici/lib/llhttp/llhttp-wasm.js:2:27:
+      2 │ const { Buffer } = require('node:buffer');
+        ╵                            ~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:assert" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/undici@6.22.0/node_modules/undici/lib/api/readable.js:3:23:
+      3 │ const assert = require('node:assert');
+        ╵                        ~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:stream" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/undici@6.22.0/node_modules/undici/lib/api/readable.js:4:29:
+      4 │ const { Readable } = require('node:stream');
+        ╵                              ~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:assert" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/undici@6.22.0/node_modules/undici/lib/web/fetch/formdata-parser.js:7:23:
+      7 │ const assert = require('node:assert');
+        ╵                        ~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:buffer" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/undici@6.22.0/node_modules/undici/lib/web/fetch/formdata-parser.js:8:35:
+      8 │ const { File: NodeFile } = require('node:buffer');
+        ╵                                    ~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:stream/promises" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/execa@9.6.0/node_modules/execa/lib/convert/shared.js:1:25:
+      1 │ import { finished } from "node:stream/promises";
+        ╵                          ~~~~~~~~~~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:assert" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/undici@6.22.0/node_modules/undici/lib/web/cache/util.js:2:23:
+      2 │ const assert = require('node:assert');
+        ╵                        ~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:events" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/execa@9.6.0/node_modules/execa/lib/io/iterate.js:1:19:
+      1 │ import { on } from "node:events";
+        ╵                    ~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:crypto" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/undici@6.22.0/node_modules/undici/lib/web/websocket/frame.js:8:21:
+      8 │     crypto = require('node:crypto');
+        ╵                      ~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:stream" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/execa@9.6.0/node_modules/execa/lib/io/iterate.js:2:40:
+      2 │ import { getDefaultHighWaterMark } from "node:stream";
+        ╵                                         ~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:os" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/human-signals@8.0.1/node_modules/human-signals/build/src/signals.js:1:26:
+      1 │ import { constants } from "node:os";
+        ╵                           ~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "fs" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/cross-spawn@7.0.6/node_modules/cross-spawn/lib/util/readShebang.js:2:19:
+      2 │ const fs = require('fs');
+        ╵                    ~~~~
+
+✘ [ERROR] Cannot use Node.js module "path" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/cross-spawn@7.0.6/node_modules/cross-spawn/lib/util/resolveCommand.js:2:21:
+      2 │ const path = require('path');
+        ╵                      ~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:zlib" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/undici@6.22.0/node_modules/undici/lib/web/websocket/permessage-deflate.js:2:59:
+      2 │ ... { createInflateRaw, Z_DEFAULT_WINDOWBITS } = require('node:zlib');
+        ╵                                                          ~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:tty" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/yoctocolors@2.1.2/node_modules/yoctocolors/base.js:1:16:
+      1 │ import tty from "node:tty";
+        ╵                 ~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "path" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/which@2.0.2/node_modules/which/which.js:2:21:
+      2 │ const path = require('path');
+        ╵                      ~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:process" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/is-unicode-supported@2.1.0/node_modules/is-unicode-supported/index.js:1:20:
+      1 │ import process from "node:process";
+        ╵                     ~~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "fs" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/isexe@2.0.0/node_modules/isexe/mode.js:3:17:
+      3 │ var fs = require('fs');
+        ╵                  ~~~~
+
+✘ [ERROR] Cannot use Node.js module "fs" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/isexe@2.0.0/node_modules/isexe/windows.js:3:17:
+      3 │ var fs = require('fs');
+        ╵                  ~~~~
+
+Error: Build failed with 202 errors:
+../../node_modules/.pnpm/@sindresorhus+merge-streams@4.0.0/node_modules/@sindresorhus/merge-streams/index.js:1:25: ERROR: [plugin: workflow-node-module-error] Cannot use Node.js module "node:events" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow
+../../node_modules/.pnpm/@sindresorhus+merge-streams@4.0.0/node_modules/@sindresorhus/merge-streams/index.js:2:74: ERROR: [plugin: workflow-node-module-error] Cannot use Node.js module "node:stream" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow
+../../node_modules/.pnpm/@sindresorhus+merge-streams@4.0.0/node_modules/@sindresorhus/merge-streams/index.js:3:25: ERROR: [plugin: workflow-node-module-error] Cannot use Node.js module "node:stream/promises" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow
+../../node_modules/.pnpm/@workflow+core@4.0.1-beta.10_@aws-sdk+client-sts@3.662.0_@opentelemetry+api@1.9.0/node_modules/@workflow/core/dist/runtime/world.js:1:30: ERROR: [plugin: workflow-node-module-error] Cannot use Node.js module "node:module" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow
+../../node_modules/.pnpm/@workflow+core@4.0.1-beta.10_@aws-sdk+client-sts@3.662.0_@opentelemetry+api@1.9.0/node_modules/@workflow/core/dist/runtime/world.js:2:17: ERROR: [plugin: workflow-node-module-error] Cannot use Node.js module "node:path" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow
+...
+    at new Promise (<anonymous>) {
+  errors: [Array],
+  warnings: []
+}
+Discovering workflow directives 169ms
+Created steps bundle 14ms
+✘ [ERROR] Cannot use Node.js module "node:async_hooks" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/@workflow+core@4.0.1-beta.10_@aws-sdk+client-sts@3.662.0_@opentelemetry+api@1.9.0/node_modules/@workflow/core/dist/step/context-storage.js:1:34:
+      1 │ import { AsyncLocalStorage } from "node:async_hooks";
+        ╵                                   ~~~~~~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:module" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/@workflow+core@4.0.1-beta.10_@aws-sdk+client-sts@3.662.0_@opentelemetry+api@1.9.0/node_modules/@workflow/core/dist/runtime/world.js:1:30:
+      1 │ import { createRequire } from "node:module";
+        ╵                               ~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:util" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/@workflow+core@4.0.1-beta.10_@aws-sdk+client-sts@3.662.0_@opentelemetry+api@1.9.0/node_modules/@workflow/core/dist/types.js:1:22:
+      1 │ import { types } from "node:util";
+        ╵                       ~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:path" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/@workflow+core@4.0.1-beta.10_@aws-sdk+client-sts@3.662.0_@opentelemetry+api@1.9.0/node_modules/@workflow/core/dist/runtime/world.js:2:17:
+      2 │ import Path from "node:path";
+        ╵                  ~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:vm" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/@workflow+core@4.0.1-beta.10_@aws-sdk+client-sts@3.662.0_@opentelemetry+api@1.9.0/node_modules/@workflow/core/dist/workflow.js:1:29:
+      1 │ import { runInContext } from "node:vm";
+        ╵                              ~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:process" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/pid-port@2.0.0/node_modules/pid-port/index.js:1:20:
+      1 │ import process from "node:process";
+        ╵                     ~~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "tty" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/debug@4.4.3_supports-color@9.4.0/node_modules/debug/src/node.js:3:24:
+      3 │  */ const tty = require('tty');
+        ╵                         ~~~~~
+
+✘ [ERROR] Cannot use Node.js module "util" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/debug@4.4.3_supports-color@9.4.0/node_modules/debug/src/node.js:4:21:
+      4 │ const util = require('util');
+        ╵                      ~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:events" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/@workflow+world-local@4.0.1-beta.6_@opentelemetry+api@1.9.0/node_modules/@workflow/world-local/dist/streamer.js:1:29:
+      1 │ import { EventEmitter } from "node:events";
+        ╵                              ~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:timers/promises" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/@workflow+world-local@4.0.1-beta.6_@opentelemetry+api@1.9.0/node_modules/@workflow/world-local/dist/queue.js:1:27:
+      1 │ import { setTimeout } from "node:timers/promises";
+        ╵                            ~~~~~~~~~~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:path" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/@workflow+world-local@4.0.1-beta.6_@opentelemetry+api@1.9.0/node_modules/@workflow/world-local/dist/streamer.js:2:17:
+      2 │ import path from "node:path";
+        ╵                  ~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:path" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/@workflow+world-local@4.0.1-beta.6_@opentelemetry+api@1.9.0/node_modules/@workflow/world-local/dist/storage.js:1:17:
+      1 │ import path from "node:path";
+        ╵                  ~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:crypto" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/nanoid@5.1.6/node_modules/nanoid/index.js:1:36:
+      1 │ import { webcrypto as crypto } from "node:crypto";
+        ╵                                     ~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:vm" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/@workflow+core@4.0.1-beta.10_@aws-sdk+client-sts@3.662.0_@opentelemetry+api@1.9.0/node_modules/@workflow/core/dist/vm/index.js:1:63:
+      1 │ ... { runInContext, createContext as vmCreateContext } from "node:vm";
+        ╵                                                             ~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:fs" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/@workflow+world-local@4.0.1-beta.6_@opentelemetry+api@1.9.0/node_modules/@workflow/world-local/dist/fs.js:1:31:
+      1 │ import { promises as fs } from "node:fs";
+        ╵                                ~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:path" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/@workflow+world-local@4.0.1-beta.6_@opentelemetry+api@1.9.0/node_modules/@workflow/world-local/dist/fs.js:2:17:
+      2 │ import path from "node:path";
+        ╵                  ~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:process" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/execa@9.6.0/node_modules/execa/lib/methods/node.js:1:35:
+      1 │ import { execPath, execArgv } from "node:process";
+        ╵                                    ~~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:process" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/execa@9.6.0/node_modules/execa/lib/ipc/methods.js:1:20:
+      1 │ import process from "node:process";
+        ╵                     ~~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:path" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/execa@9.6.0/node_modules/execa/lib/methods/node.js:2:17:
+      2 │ import path from "node:path";
+        ╵                  ~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:url" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/execa@9.6.0/node_modules/execa/lib/arguments/file-url.js:1:30:
+      1 │ import { fileURLToPath } from "node:url";
+        ╵                               ~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:buffer" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/undici@6.22.0/node_modules/undici/index.js:105:49:
+      105 │ ...le.exports.File = globalThis.File ?? require('node:buffer').File;
+          ╵                                                 ~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:timers/promises" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/execa@9.6.0/node_modules/execa/lib/ipc/graceful.js:1:26:
+      1 │ import { scheduler } from "node:timers/promises";
+        ╵                           ~~~~~~~~~~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:util" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/execa@9.6.0/node_modules/execa/lib/ipc/send.js:1:26:
+      1 │ import { promisify } from "node:util";
+        ╵                           ~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:events" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/execa@9.6.0/node_modules/execa/lib/ipc/get-one.js:1:25:
+      1 │ import { once, on } from "node:events";
+        ╵                          ~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:events" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/execa@9.6.0/node_modules/execa/lib/ipc/get-each.js:1:25:
+      1 │ import { once, on } from "node:events";
+        ╵                          ~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:child_process" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/execa@9.6.0/node_modules/execa/lib/methods/template.js:1:29:
+      1 │ import { ChildProcess } from "node:child_process";
+        ╵                              ~~~~~~~~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:child_process" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/execa@9.6.0/node_modules/execa/lib/methods/main-sync.js:1:26:
+      1 │ import { spawnSync } from "node:child_process";
+        ╵                           ~~~~~~~~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:events" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/execa@9.6.0/node_modules/execa/lib/methods/main-async.js:1:32:
+      1 │ import { setMaxListeners } from "node:events";
+        ╵                                 ~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:child_process" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/execa@9.6.0/node_modules/execa/lib/methods/main-async.js:2:22:
+      2 │ import { spawn } from "node:child_process";
+        ╵                       ~~~~~~~~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "crypto" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/seedrandom@3.0.5/node_modules/seedrandom/seedrandom.js:219:33:
+      219 │             nodecrypto = require('crypto');
+          ╵                                  ~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:events" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/undici@6.22.0/node_modules/undici/lib/dispatcher/dispatcher.js:2:29:
+      2 │ const EventEmitter = require('node:events');
+        ╵                              ~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:assert" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/undici@6.22.0/node_modules/undici/lib/dispatcher/client.js:3:23:
+      3 │ const assert = require('node:assert');
+        ╵                        ~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:net" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/undici@6.22.0/node_modules/undici/lib/dispatcher/client.js:4:20:
+      4 │ const net = require('node:net');
+        ╵                     ~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:http" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/undici@6.22.0/node_modules/undici/lib/dispatcher/client.js:5:21:
+      5 │ const http = require('node:http');
+        ╵                      ~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:net" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/undici@6.22.0/node_modules/undici/lib/core/connect.js:2:20:
+      2 │ const net = require('node:net');
+        ╵                     ~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:assert" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/undici@6.22.0/node_modules/undici/lib/core/connect.js:3:23:
+      3 │ const assert = require('node:assert');
+        ╵                        ~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:util" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/undici@6.22.0/node_modules/undici/lib/mock/mock-client.js:2:30:
+      2 │ const { promisify } = require('node:util');
+        ╵                               ~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:url" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/undici@6.22.0/node_modules/undici/lib/dispatcher/proxy-agent.js:3:24:
+      3 │ const { URL } = require('node:url');
+        ╵                         ~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:util" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/undici@6.22.0/node_modules/undici/lib/mock/mock-pool.js:2:30:
+      2 │ const { promisify } = require('node:util');
+        ╵                               ~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:tls" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/undici@6.22.0/node_modules/undici/lib/core/connect.js:81:30:
+      81 │                 tls = require('node:tls');
+         ╵                               ~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:assert" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/undici@6.22.0/node_modules/undici/lib/handler/retry-handler.js:2:23:
+      2 │ const assert = require('node:assert');
+        ╵                        ~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:assert" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/undici@6.22.0/node_modules/undici/lib/core/util.js:2:23:
+      2 │ const assert = require('node:assert');
+        ╵                        ~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:http" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/undici@6.22.0/node_modules/undici/lib/core/util.js:4:36:
+      4 │ const { IncomingMessage } = require('node:http');
+        ╵                                     ~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:assert" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/undici@6.22.0/node_modules/undici/lib/handler/redirect-handler.js:4:23:
+      4 │ const assert = require('node:assert');
+        ╵                        ~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:stream" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/undici@6.22.0/node_modules/undici/lib/core/util.js:5:23:
+      5 │ const stream = require('node:stream');
+        ╵                        ~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:net" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/undici@6.22.0/node_modules/undici/lib/core/util.js:6:20:
+      6 │ const net = require('node:net');
+        ╵                     ~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:events" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/undici@6.22.0/node_modules/undici/lib/handler/redirect-handler.js:6:19:
+      6 │ const EE = require('node:events');
+        ╵                    ~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:net" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/undici@6.22.0/node_modules/undici/lib/interceptor/dns.js:2:25:
+      2 │ const { isIP } = require('node:net');
+        ╵                          ~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:buffer" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/undici@6.22.0/node_modules/undici/lib/core/util.js:7:25:
+      7 │ const { Blob } = require('node:buffer');
+        ╵                          ~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:dns" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/undici@6.22.0/node_modules/undici/lib/interceptor/dns.js:3:27:
+      3 │ const { lookup } = require('node:dns');
+        ╵                            ~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:util" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/undici@6.22.0/node_modules/undici/lib/core/util.js:8:25:
+      8 │ const nodeUtil = require('node:util');
+        ╵                          ~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:querystring" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/undici@6.22.0/node_modules/undici/lib/core/util.js:9:30:
+      9 │ const { stringify } = require('node:querystring');
+        ╵                               ~~~~~~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:events" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/undici@6.22.0/node_modules/undici/lib/core/util.js:10:37:
+      10 │ const { EventEmitter: EE } = require('node:events');
+         ╵                                      ~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:assert" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/undici@6.22.0/node_modules/undici/lib/web/fetch/headers.js:7:23:
+      7 │ const assert = require('node:assert');
+        ╵                        ~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:buffer" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/undici@6.22.0/node_modules/undici/lib/web/fetch/formdata.js:7:37:
+      7 │ const { File: NativeFile } = require('node:buffer');
+        ╵                                      ~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:util" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/undici@6.22.0/node_modules/undici/lib/web/fetch/headers.js:8:21:
+      8 │ const util = require('node:util');
+        ╵                      ~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:util" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/undici@6.22.0/node_modules/undici/lib/web/fetch/formdata.js:8:25:
+      8 │ const nodeUtil = require('node:util');
+        ╵                          ~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:worker_threads" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/undici@6.22.0/node_modules/undici/lib/web/websocket/events.js:5:32:
+      5 │ const { MessagePort } = require('node:worker_threads');
+        ╵                                 ~~~~~~~~~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:zlib" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/undici@6.22.0/node_modules/undici/lib/web/fetch/index.js:6:21:
+      6 │ const zlib = require('node:zlib');
+        ╵                      ~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:util" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/undici@6.22.0/node_modules/undici/lib/web/fetch/response.js:5:25:
+      5 │ const nodeUtil = require('node:util');
+        ╵                          ~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:assert" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/undici@6.22.0/node_modules/undici/lib/web/fetch/index.js:9:23:
+      9 │ const assert = require('node:assert');
+        ╵                        ~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:events" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/undici@6.22.0/node_modules/undici/lib/web/fetch/index.js:12:19:
+      12 │ const EE = require('node:events');
+         ╵                    ~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:stream" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/undici@6.22.0/node_modules/undici/lib/web/fetch/index.js:13:49:
+      13 │ const { Readable, pipeline, finished } = require('node:stream');
+         ╵                                                  ~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:stream" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/undici@6.22.0/node_modules/undici/lib/web/eventsource/eventsource.js:2:29:
+      2 │ const { pipeline } = require('node:stream');
+        ╵                              ~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:events" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/execa@9.6.0/node_modules/execa/lib/ipc/forward.js:1:29:
+      1 │ import { EventEmitter } from "node:events";
+        ╵                              ~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:assert" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/undici@6.22.0/node_modules/undici/lib/web/fetch/data-url.js:2:23:
+      2 │ const assert = require('node:assert');
+        ╵                        ~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:events" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/execa@9.6.0/node_modules/execa/lib/ipc/strict.js:1:21:
+      1 │ import { once } from "node:events";
+        ╵                      ~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:string_decoder" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/execa@9.6.0/node_modules/execa/lib/utils/uint-array.js:1:30:
+      1 │ import { StringDecoder } from "node:string_decoder";
+        ╵                               ~~~~~~~~~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:util" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/execa@9.6.0/node_modules/execa/lib/arguments/specific.js:1:25:
+      1 │ import { debuglog } from "node:util";
+        ╵                          ~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:path" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/execa@9.6.0/node_modules/execa/lib/arguments/options.js:1:17:
+      1 │ import path from "node:path";
+        ╵                  ~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:fs" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/execa@9.6.0/node_modules/execa/lib/io/output-sync.js:1:46:
+      1 │ import { writeFileSync, appendFileSync } from "node:fs";
+        ╵                                               ~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:fs" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/execa@9.6.0/node_modules/execa/lib/stdio/handle-sync.js:1:29:
+      1 │ import { readFileSync } from "node:fs";
+        ╵                              ~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:process" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/execa@9.6.0/node_modules/execa/lib/arguments/options.js:2:20:
+      2 │ import process from "node:process";
+        ╵                     ~~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:http" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/undici@6.22.0/node_modules/undici/lib/web/fetch/index.js:17:33:
+      17 │ const { STATUS_CODES } = require('node:http');
+         ╵                                  ~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:assert" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/undici@6.22.0/node_modules/undici/lib/web/fetch/response.js:14:23:
+      14 │ const assert = require('node:assert');
+         ╵                        ~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:buffer" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/undici@6.22.0/node_modules/undici/lib/web/fetch/index.js:588:47:
+      588 │ ...      resolveObjectURL = require('node:buffer').resolveObjectURL;
+          ╵                                     ~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:events" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/get-stream@9.0.1/node_modules/get-stream/source/index.js:1:19:
+      1 │ import { on } from "node:events";
+        ╵                    ~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:child_process" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/execa@9.6.0/node_modules/execa/lib/return/early-error.js:1:29:
+      1 │ import { ChildProcess } from "node:child_process";
+        ╵                              ~~~~~~~~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:fs" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/execa@9.6.0/node_modules/execa/lib/stdio/handle-async.js:1:52:
+      1 │ import { createReadStream, createWriteStream } from "node:fs";
+        ╵                                                     ~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:events" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/execa@9.6.0/node_modules/execa/lib/terminate/cleanup.js:1:33:
+      1 │ import { addAbortListener } from "node:events";
+        ╵                                  ~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:util" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/undici@6.22.0/node_modules/undici/lib/web/fetch/request.js:6:25:
+      6 │ const nodeUtil = require('node:util');
+        ╵                          ~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:util" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/undici@6.22.0/node_modules/undici/lib/web/websocket/websocket.js:12:26:
+      12 │ const { types } = require('node:util');
+         ╵                           ~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:stream/promises" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/get-stream@9.0.1/node_modules/get-stream/source/index.js:2:25:
+      2 │ import { finished } from "node:stream/promises";
+        ╵                          ~~~~~~~~~~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:buffer" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/execa@9.6.0/node_modules/execa/lib/stdio/handle-async.js:2:23:
+      2 │ import { Buffer } from "node:buffer";
+        ╵                        ~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:timers/promises" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/execa@9.6.0/node_modules/execa/lib/terminate/kill.js:1:27:
+      1 │ import { setTimeout } from "node:timers/promises";
+        ╵                            ~~~~~~~~~~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:stream" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/execa@9.6.0/node_modules/execa/lib/return/early-error.js:2:56:
+      2 │ import { PassThrough, Readable, Writable, Duplex } from "node:stream";
+        ╵                                                         ~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:stream" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/execa@9.6.0/node_modules/execa/lib/stdio/handle-async.js:3:43:
+      3 │ import { Readable, Writable, Duplex } from "node:stream";
+        ╵                                            ~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:events" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/execa@9.6.0/node_modules/execa/lib/resolve/wait-subprocess.js:1:21:
+      1 │ import { once } from "node:events";
+        ╵                      ~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:diagnostics_channel" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/undici@6.22.0/node_modules/undici/lib/core/diagnostics.js:2:35:
+      2 │ const diagnosticsChannel = require('node:diagnostics_channel');
+        ╵                                    ~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:util" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/undici@6.22.0/node_modules/undici/lib/core/diagnostics.js:3:21:
+      3 │ const util = require('node:util');
+        ╵                      ~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:assert" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/undici@6.22.0/node_modules/undici/lib/web/fetch/request.js:14:23:
+      14 │ const assert = require('node:assert');
+         ╵                        ~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:events" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/undici@6.22.0/node_modules/undici/lib/web/fetch/request.js:15:93:
+      15 │ ...getEventListeners, defaultMaxListeners } = require('node:events');
+         ╵                                                       ~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:stream" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/undici@6.22.0/node_modules/undici/lib/mock/pending-interceptors-formatter.js:2:30:
+      2 │ const { Transform } = require('node:stream');
+        ╵                               ~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:http" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/undici@6.22.0/node_modules/undici/lib/mock/mock-utils.js:5:33:
+      5 │ const { STATUS_CODES } = require('node:http');
+        ╵                                  ~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:console" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/undici@6.22.0/node_modules/undici/lib/mock/pending-interceptors-formatter.js:3:28:
+      3 │ const { Console } = require('node:console');
+        ╵                             ~~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:assert" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/undici@6.22.0/node_modules/undici/lib/core/request.js:3:23:
+      3 │ const assert = require('node:assert');
+        ╵                        ~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:util" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/undici@6.22.0/node_modules/undici/lib/mock/mock-utils.js:6:41:
+      6 │ const { types: { isPromise } } = require('node:util');
+        ╵                                          ~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:assert" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/undici@6.22.0/node_modules/undici/lib/dispatcher/client-h2.js:2:23:
+      2 │ const assert = require('node:assert');
+        ╵                        ~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:stream" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/undici@6.22.0/node_modules/undici/lib/dispatcher/client-h2.js:3:29:
+      3 │ const { pipeline } = require('node:stream');
+        ╵                              ~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:assert" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/undici@6.22.0/node_modules/undici/lib/api/api-stream.js:2:23:
+      2 │ const assert = require('node:assert');
+        ╵                        ~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:stream" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/undici@6.22.0/node_modules/undici/lib/api/api-stream.js:3:42:
+      3 │ const { finished, PassThrough } = require('node:stream');
+        ╵                                           ~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:http2" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/undici@6.22.0/node_modules/undici/lib/dispatcher/client-h2.js:13:20:
+      13 │     http2 = require('node:http2');
+         ╵                     ~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:assert" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/undici@6.22.0/node_modules/undici/lib/api/api-request.js:2:23:
+      2 │ const assert = require('node:assert');
+        ╵                        ~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:stream" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/undici@6.22.0/node_modules/undici/lib/api/api-pipeline.js:2:50:
+      2 │ const { Readable, Duplex, PassThrough } = require('node:stream');
+        ╵                                                   ~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:async_hooks" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/undici@6.22.0/node_modules/undici/lib/api/api-stream.js:7:34:
+      7 │ const { AsyncResource } = require('node:async_hooks');
+        ╵                                   ~~~~~~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:async_hooks" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/undici@6.22.0/node_modules/undici/lib/api/api-pipeline.js:5:34:
+      5 │ const { AsyncResource } = require('node:async_hooks');
+        ╵                                   ~~~~~~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:async_hooks" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/undici@6.22.0/node_modules/undici/lib/api/api-upgrade.js:3:34:
+      3 │ const { AsyncResource } = require('node:async_hooks');
+        ╵                                   ~~~~~~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:async_hooks" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/undici@6.22.0/node_modules/undici/lib/api/api-request.js:7:34:
+      7 │ const { AsyncResource } = require('node:async_hooks');
+        ╵                                   ~~~~~~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:assert" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/undici@6.22.0/node_modules/undici/lib/api/api-pipeline.js:7:23:
+      7 │ const assert = require('node:assert');
+        ╵                        ~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:assert" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/undici@6.22.0/node_modules/undici/lib/api/api-upgrade.js:6:23:
+      6 │ const assert = require('node:assert');
+        ╵                        ~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:assert" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/undici@6.22.0/node_modules/undici/lib/api/api-connect.js:2:23:
+      2 │ const assert = require('node:assert');
+        ╵                        ~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:async_hooks" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/undici@6.22.0/node_modules/undici/lib/api/api-connect.js:3:34:
+      3 │ const { AsyncResource } = require('node:async_hooks');
+        ╵                                   ~~~~~~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:buffer" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/undici@6.22.0/node_modules/undici/lib/web/fetch/file.js:2:31:
+      2 │ const { Blob, File } = require('node:buffer');
+        ╵                                ~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:assert" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/undici@6.22.0/node_modules/undici/lib/dispatcher/client-h1.js:2:48:
+      2 │ /* global WebAssembly */ const assert = require('node:assert');
+        ╵                                                 ~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:util" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/undici@6.22.0/node_modules/undici/lib/web/fetch/webidl.js:2:35:
+      2 │ const { types, inspect } = require('node:util');
+        ╵                                    ~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:events" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/execa@9.6.0/node_modules/execa/lib/ipc/incoming.js:1:21:
+      1 │ import { once } from "node:events";
+        ╵                      ~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:events" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/execa@9.6.0/node_modules/execa/lib/resolve/exit-async.js:1:21:
+      1 │ import { once } from "node:events";
+        ╵                      ~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:process" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/execa@9.6.0/node_modules/execa/lib/utils/standard-stream.js:1:20:
+      1 │ import process from "node:process";
+        ╵                     ~~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:stream" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/execa@9.6.0/node_modules/execa/lib/transform/generator.js:1:51:
+      1 │ import { Transform, getDefaultHighWaterMark } from "node:stream";
+        ╵                                                    ~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:stream" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/undici@6.22.0/node_modules/undici/lib/web/fetch/util.js:2:30:
+      2 │ const { Transform } = require('node:stream');
+        ╵                               ~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:worker_threads" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/undici@6.22.0/node_modules/undici/lib/web/fetch/webidl.js:3:38:
+      3 │ const { markAsUncloneable } = require('node:worker_threads');
+        ╵                                       ~~~~~~~~~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:util" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/undici@6.22.0/node_modules/undici/lib/web/fileapi/util.js:6:26:
+      6 │ const { types } = require('node:util');
+        ╵                           ~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:util" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/execa@9.6.0/node_modules/execa/lib/return/message.js:1:24:
+      1 │ import { inspect } from "node:util";
+        ╵                         ~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:process" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/execa@9.6.0/node_modules/execa/lib/arguments/escape.js:1:25:
+      1 │ import { platform } from "node:process";
+        ╵                          ~~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:timers/promises" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/execa@9.6.0/node_modules/execa/lib/ipc/incoming.js:2:26:
+      2 │ import { scheduler } from "node:timers/promises";
+        ╵                           ~~~~~~~~~~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "string_decoder" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/undici@6.22.0/node_modules/undici/lib/web/fileapi/util.js:7:34:
+      7 │ const { StringDecoder } = require('string_decoder');
+        ╵                                   ~~~~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:os" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/execa@9.6.0/node_modules/execa/lib/terminate/signal.js:1:26:
+      1 │ import { constants } from "node:os";
+        ╵                           ~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:util" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/execa@9.6.0/node_modules/execa/lib/arguments/escape.js:2:41:
+      2 │ import { stripVTControlCharacters } from "node:util";
+        ╵                                          ~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:zlib" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/undici@6.22.0/node_modules/undici/lib/web/fetch/util.js:3:21:
+      3 │ const zlib = require('node:zlib');
+        ╵                      ~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:process" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/execa@9.6.0/node_modules/execa/lib/return/duration.js:1:23:
+      1 │ import { hrtime } from "node:process";
+        ╵                        ~~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:assert" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/undici@6.22.0/node_modules/undici/lib/web/cookies/parse.js:5:23:
+      5 │ const assert = require('node:assert');
+        ╵                        ~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:buffer" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/undici@6.22.0/node_modules/undici/lib/web/fileapi/util.js:8:25:
+      8 │ const { btoa } = require('node:buffer');
+        ╵                          ~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:events" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/execa@9.6.0/node_modules/execa/lib/utils/max-listeners.js:1:33:
+      1 │ import { addAbortListener } from "node:events";
+        ╵                                  ~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:events" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/@sindresorhus+merge-streams@4.0.0/node_modules/@sindresorhus/merge-streams/index.js:1:25:
+      1 │ import { on, once } from "node:events";
+        ╵                          ~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:stream" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/@sindresorhus+merge-streams@4.0.0/node_modules/@sindresorhus/merge-streams/index.js:2:74:
+      2 │ ...as PassThroughStream, getDefaultHighWaterMark } from "node:stream";
+        ╵                                                         ~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:stream" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/undici@6.22.0/node_modules/undici/lib/web/websocket/receiver.js:2:29:
+      2 │ const { Writable } = require('node:stream');
+        ╵                              ~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:buffer" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/undici@6.22.0/node_modules/undici/lib/web/fetch/body.js:7:25:
+      7 │ const { Blob } = require('node:buffer');
+        ╵                          ~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:stream/promises" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/@sindresorhus+merge-streams@4.0.0/node_modules/@sindresorhus/merge-streams/index.js:3:25:
+      3 │ import { finished } from "node:stream/promises";
+        ╵                          ~~~~~~~~~~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:assert" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/undici@6.22.0/node_modules/undici/lib/web/websocket/receiver.js:3:23:
+      3 │ const assert = require('node:assert');
+        ╵                        ~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:assert" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/undici@6.22.0/node_modules/undici/lib/web/fetch/body.js:8:23:
+      8 │ const assert = require('node:assert');
+        ╵                        ~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:stream/promises" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/execa@9.6.0/node_modules/execa/lib/io/pipeline.js:1:25:
+      1 │ import { finished } from "node:stream/promises";
+        ╵                          ~~~~~~~~~~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:perf_hooks" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/undici@6.22.0/node_modules/undici/lib/web/fetch/util.js:7:32:
+      7 │ const { performance } = require('node:perf_hooks');
+        ╵                                 ~~~~~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:stream" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/execa@9.6.0/node_modules/execa/lib/convert/readable.js:1:25:
+      1 │ import { Readable } from "node:stream";
+        ╵                          ~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:stream" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/undici@6.22.0/node_modules/undici/lib/web/fetch/body.js:9:43:
+      9 │ const { isErrored, isDisturbed } = require('node:stream');
+        ╵                                            ~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:util" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/execa@9.6.0/node_modules/execa/lib/convert/readable.js:2:28:
+      2 │ import { callbackify } from "node:util";
+        ╵                             ~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:stream" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/execa@9.6.0/node_modules/execa/lib/convert/duplex.js:1:23:
+      1 │ import { Duplex } from "node:stream";
+        ╵                        ~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:util/types" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/undici@6.22.0/node_modules/undici/lib/web/fetch/body.js:10:34:
+      10 │ const { isArrayBuffer } = require('node:util/types');
+         ╵                                   ~~~~~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:util" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/execa@9.6.0/node_modules/execa/lib/pipe/abort.js:1:24:
+      1 │ import { aborted } from "node:util";
+        ╵                         ~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:stream" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/execa@9.6.0/node_modules/execa/lib/convert/writable.js:1:25:
+      1 │ import { Writable } from "node:stream";
+        ╵                          ~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:buffer" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/undici@6.22.0/node_modules/undici/lib/web/websocket/util.js:5:27:
+      5 │ const { isUtf8 } = require('node:buffer');
+        ╵                            ~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:util" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/execa@9.6.0/node_modules/execa/lib/convert/duplex.js:2:28:
+      2 │ import { callbackify } from "node:util";
+        ╵                             ~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:util" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/execa@9.6.0/node_modules/execa/lib/convert/writable.js:2:28:
+      2 │ import { callbackify } from "node:util";
+        ╵                             ~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:assert" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/undici@6.22.0/node_modules/undici/lib/web/fetch/util.js:9:23:
+      9 │ const assert = require('node:assert');
+        ╵                        ~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:util/types" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/undici@6.22.0/node_modules/undici/lib/web/fetch/util.js:10:33:
+      10 │ const { isUint8Array } = require('node:util/types');
+         ╵                                  ~~~~~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:stream/promises" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/execa@9.6.0/node_modules/execa/lib/pipe/streaming.js:1:25:
+      1 │ import { finished } from "node:stream/promises";
+        ╵                          ~~~~~~~~~~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:assert" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/undici@6.22.0/node_modules/undici/lib/web/cache/cache.js:11:23:
+      11 │ const assert = require('node:assert');
+         ╵                        ~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "child_process" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/cross-spawn@7.0.6/node_modules/cross-spawn/index.js:2:19:
+      2 │ const cp = require('child_process');
+        ╵                    ~~~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:crypto" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/undici@6.22.0/node_modules/undici/lib/web/fetch/body.js:15:27:
+      15 │     const crypto = require('node:crypto');
+         ╵                            ~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:crypto" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/undici@6.22.0/node_modules/undici/lib/web/fetch/util.js:16:21:
+      16 │     crypto = require('node:crypto');
+         ╵                      ~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:stream" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/undici@6.22.0/node_modules/undici/lib/web/eventsource/eventsource-stream.js:2:30:
+      2 │ const { Transform } = require('node:stream');
+        ╵                               ~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:fs" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/execa@9.6.0/node_modules/execa/lib/arguments/cwd.js:1:25:
+      1 │ import { statSync } from "node:fs";
+        ╵                          ~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:process" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/npm-run-path@6.0.0/node_modules/npm-run-path/index.js:1:20:
+      1 │ import process from "node:process";
+        ╵                     ~~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:timers/promises" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/execa@9.6.0/node_modules/execa/lib/terminate/timeout.js:1:27:
+      1 │ import { setTimeout } from "node:timers/promises";
+        ╵                            ~~~~~~~~~~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:path" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/execa@9.6.0/node_modules/execa/lib/arguments/cwd.js:2:17:
+      2 │ import path from "node:path";
+        ╵                  ~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:path" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/npm-run-path@6.0.0/node_modules/npm-run-path/index.js:2:17:
+      2 │ import path from "node:path";
+        ╵                  ~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:stream/promises" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/execa@9.6.0/node_modules/execa/lib/resolve/wait-stream.js:1:25:
+      1 │ import { finished } from "node:stream/promises";
+        ╵                          ~~~~~~~~~~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:v8" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/execa@9.6.0/node_modules/execa/lib/ipc/ipc-input.js:1:26:
+      1 │ import { serialize } from "node:v8";
+        ╵                           ~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:process" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/execa@9.6.0/node_modules/execa/lib/arguments/cwd.js:3:20:
+      3 │ import process from "node:process";
+        ╵                     ~~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:crypto" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/undici@6.22.0/node_modules/undici/lib/web/websocket/connection.js:14:21:
+      14 │     crypto = require('node:crypto');
+         ╵                      ~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:timers/promises" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/execa@9.6.0/node_modules/execa/lib/io/contents.js:1:29:
+      1 │ import { setImmediate } from "node:timers/promises";
+        ╵                              ~~~~~~~~~~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:assert" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/undici@6.22.0/node_modules/undici/lib/api/util.js:1:23:
+      1 │ const assert = require('node:assert');
+        ╵                        ~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:util" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/execa@9.6.0/node_modules/execa/lib/verbose/log.js:1:24:
+      1 │ import { inspect } from "node:util";
+        ╵                         ~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:assert" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/undici@6.22.0/node_modules/undici/lib/api/readable.js:3:23:
+      3 │ const assert = require('node:assert');
+        ╵                        ~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:buffer" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/execa@9.6.0/node_modules/execa/lib/transform/validate.js:1:23:
+      1 │ import { Buffer } from "node:buffer";
+        ╵                        ~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:os" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/human-signals@8.0.1/node_modules/human-signals/build/src/main.js:1:26:
+      1 │ import { constants } from "node:os";
+        ╵                           ~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:buffer" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/undici@6.22.0/node_modules/undici/lib/llhttp/llhttp_simd-wasm.js:2:27:
+      2 │ const { Buffer } = require('node:buffer');
+        ╵                            ~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:stream" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/undici@6.22.0/node_modules/undici/lib/api/readable.js:4:29:
+      4 │ const { Readable } = require('node:stream');
+        ╵                              ~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:buffer" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/execa@9.6.0/node_modules/execa/lib/transform/encoding-transform.js:1:23:
+      1 │ import { Buffer } from "node:buffer";
+        ╵                        ~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:util" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/execa@9.6.0/node_modules/execa/lib/transform/run-async.js:1:28:
+      1 │ import { callbackify } from "node:util";
+        ╵                             ~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:buffer" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/undici@6.22.0/node_modules/undici/lib/llhttp/llhttp-wasm.js:2:27:
+      2 │ const { Buffer } = require('node:buffer');
+        ╵                            ~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:string_decoder" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/execa@9.6.0/node_modules/execa/lib/transform/encoding-transform.js:2:30:
+      2 │ import { StringDecoder } from "node:string_decoder";
+        ╵                               ~~~~~~~~~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:crypto" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/undici@6.22.0/node_modules/undici/lib/web/websocket/frame.js:8:21:
+      8 │     crypto = require('node:crypto');
+        ╵                      ~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:fs" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/execa@9.6.0/node_modules/execa/lib/stdio/native.js:1:29:
+      1 │ import { readFileSync } from "node:fs";
+        ╵                              ~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:process" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/execa@9.6.0/node_modules/execa/lib/stdio/direction.js:1:20:
+      1 │ import process from "node:process";
+        ╵                     ~~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:tty" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/execa@9.6.0/node_modules/execa/lib/stdio/native.js:2:16:
+      2 │ import tty from "node:tty";
+        ╵                 ~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:events" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/execa@9.6.0/node_modules/execa/lib/io/iterate.js:1:19:
+      1 │ import { on } from "node:events";
+        ╵                    ~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:assert" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/undici@6.22.0/node_modules/undici/lib/web/cache/util.js:2:23:
+      2 │ const assert = require('node:assert');
+        ╵                        ~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:events" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/execa@9.6.0/node_modules/execa/lib/utils/abort-signal.js:1:21:
+      1 │ import { once } from "node:events";
+        ╵                      ~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:stream" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/execa@9.6.0/node_modules/execa/lib/io/iterate.js:2:40:
+      2 │ import { getDefaultHighWaterMark } from "node:stream";
+        ╵                                         ~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:zlib" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/undici@6.22.0/node_modules/undici/lib/web/websocket/permessage-deflate.js:2:59:
+      2 │ ... { createInflateRaw, Z_DEFAULT_WINDOWBITS } = require('node:zlib');
+        ╵                                                          ~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:stream/promises" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/execa@9.6.0/node_modules/execa/lib/convert/shared.js:1:25:
+      1 │ import { finished } from "node:stream/promises";
+        ╵                          ~~~~~~~~~~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "path" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/cross-spawn@7.0.6/node_modules/cross-spawn/lib/parse.js:2:21:
+      2 │ const path = require('path');
+        ╵                      ~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:os" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/human-signals@8.0.1/node_modules/human-signals/build/src/signals.js:1:26:
+      1 │ import { constants } from "node:os";
+        ╵                           ~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:assert" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/undici@6.22.0/node_modules/undici/lib/web/fetch/formdata-parser.js:7:23:
+      7 │ const assert = require('node:assert');
+        ╵                        ~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:buffer" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/undici@6.22.0/node_modules/undici/lib/web/fetch/formdata-parser.js:8:35:
+      8 │ const { File: NodeFile } = require('node:buffer');
+        ╵                                    ~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "fs" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/cross-spawn@7.0.6/node_modules/cross-spawn/lib/util/readShebang.js:2:19:
+      2 │ const fs = require('fs');
+        ╵                    ~~~~
+
+✘ [ERROR] Cannot use Node.js module "path" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/cross-spawn@7.0.6/node_modules/cross-spawn/lib/util/resolveCommand.js:2:21:
+      2 │ const path = require('path');
+        ╵                      ~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:tty" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/yoctocolors@2.1.2/node_modules/yoctocolors/base.js:1:16:
+      1 │ import tty from "node:tty";
+        ╵                 ~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "path" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/which@2.0.2/node_modules/which/which.js:2:21:
+      2 │ const path = require('path');
+        ╵                      ~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "node:process" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/is-unicode-supported@2.1.0/node_modules/is-unicode-supported/index.js:1:20:
+      1 │ import process from "node:process";
+        ╵                     ~~~~~~~~~~~~~~
+
+✘ [ERROR] Cannot use Node.js module "fs" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/isexe@2.0.0/node_modules/isexe/mode.js:3:17:
+      3 │ var fs = require('fs');
+        ╵                  ~~~~
+
+✘ [ERROR] Cannot use Node.js module "fs" in workflow functions. Move this module to a step function.
+
+Learn more: https://useworkflow.dev/err/node-js-module-in-workflow [plugin workflow-node-module-error]
+
+    ../../node_modules/.pnpm/isexe@2.0.0/node_modules/isexe/windows.js:3:17:
+      3 │ var fs = require('fs');
+        ╵                  ~~~~
+
+[?25h
+ ELIFECYCLE  Command failed with exit code 1.

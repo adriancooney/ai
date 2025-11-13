@@ -6,7 +6,7 @@ interface BatchModelBatch {
 }
 
 /**
- * Standard error codes for batch validation errors.
+ * Standard error codes for batch validati don errors.
  */
 export type BatchValidationErrorCode =
   | 'request_too_large'
@@ -27,7 +27,11 @@ export interface BatchPolicy {
   };
 }
 
-export type BatchMeters<POLICY extends BatchPolicy> = Partial<POLICY['limits']>;
+export type BatchPolicyOfModel<MODEL extends BatchModelV1> =
+  MODEL['batchPolicy'];
+export type BatchMetersState<POLICY extends BatchPolicy> = Partial<
+  POLICY['limits']
+>;
 
 export interface BatchModelV1<POLICY extends BatchPolicy = BatchPolicy> {
   modelId: string;
