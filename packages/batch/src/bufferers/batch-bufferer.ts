@@ -5,12 +5,12 @@ import { createBatch } from '../batch';
 
 // Use the Redis interface for simplicities sake
 interface KVStore {
-  get<V = unknown>(key: string): Promise<V>;
-  set(key: string, value: unknown): Promise<void>;
-  lpush(key: string, item: unknown): Promise<void>;
+  get<V = unknown>(key: string): Promise<V | null>;
+  set(key: string, value: unknown): Promise<unknown>;
+  lpush(key: string, item: unknown): Promise<unknown>;
   lrange<V>(key: string, indexStart: number, indexEnd: number): Promise<V[]>;
-  setnx(key: string, value: unknown): Promise<boolean>;
-  del(key: string): Promise<void>;
+  setnx(key: string, value: unknown): Promise<number>;
+  del(key: string): Promise<unknown>;
 }
 
 export interface CreateBatchBuffererOptions {
@@ -28,6 +28,16 @@ export function createBatchBufferer({
   locking,
 }: CreateBatchBuffererOptions): BatchBufferer {
   return {
+    async getRequests<MODEL extends BatchModelV1>(
+      model: MODEL,
+      batchId: string,
+    ): Promise<BatchRequest<MODEL>[]> {
+      return await store.lrange<BatchRequest<MODEL>>(
+        `batches:${batchId}:requests`,
+        0,
+        -1,
+      );
+    },
     async pushRequest<MODEL extends BatchModelV1>(
       model: MODEL,
       batchId: string,
@@ -125,7 +135,7 @@ async function withBatchLock(
   let acquired = false;
 
   for (let i = 0; i < maxRetries; i++) {
-    acquired = await store.setnx(lockKey, lockValue);
+    acquired = !!(await store.setnx(lockKey, lockValue));
 
     if (acquired) {
       break;
@@ -150,7 +160,9 @@ async function getBatchMeters<MODEL extends BatchModelV1>(
   model: BatchModelV1,
   batchId: string,
 ): Promise<BatchMeters<MODEL>> {
-  return createBatchMeters(model, await store.get(`batches:${batchId}:meters`));
+  const meters = await store.get(`batches:${batchId}:meters`);
+
+  return createBatchMeters(model, meters || undefined);
 }
 
 async function getBatchHeadRequest<MODEL extends BatchModelV1>(

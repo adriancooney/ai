@@ -1,4 +1,4 @@
-import { BatchModelV1 } from '@ai-sdk/provider';
+import { BatchModelBatch, BatchModelV1 } from '@ai-sdk/provider';
 import { Batch, BatchMetadata, BatchRequest, BatchResponse } from './types';
 import { Output, ToolSet } from 'ai';
 
@@ -63,4 +63,20 @@ export async function deleteBatchById({
     id,
     abortSignal,
   });
+}
+
+export async function findBatches({
+  model,
+  abortSignal,
+}: {
+  model: BatchModelV1;
+  abortSignal?: AbortSignal;
+}): Promise<BatchModelBatch[]> {
+  if (!model.doListBatches) {
+    throw new Error(
+      `Listing batches not supported by model '${model.modelId}'`,
+    );
+  }
+
+  return await model.doListBatches({ abortSignal });
 }

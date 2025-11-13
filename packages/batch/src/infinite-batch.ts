@@ -12,6 +12,7 @@ export interface InfiniteBatch<
   TOOLS extends ToolSet,
   OUTPUT extends Output.Output,
 > {
+  getBufferedRequests(): Promise<BatchRequest<MODEL>[]>;
   pushRequest(
     request: BatchRequest<MODEL>,
     options?: { cursor?: CURSOR; abortSignal?: AbortSignal },
@@ -113,6 +114,10 @@ export function getInfiniteBatch<
   }
 
   return {
+    async getBufferedRequests() {
+      return await bufferer.getRequests(model, groupKey);
+    },
+
     async pushRequest(request, options) {
       bufferer.pushRequest(model, groupKey, request, options);
     },

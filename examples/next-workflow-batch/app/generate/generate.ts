@@ -3,12 +3,17 @@ import {
   getInfiniteBatch,
   BatchRequestGenerateText,
   type InferBatchResponse,
+  createBatchBufferer,
 } from '@ai-sdk/batch';
 import { google } from '@ai-sdk/google';
+import { Redis } from '@upstash/redis';
+
+const redis = Redis.fromEnv();
 
 export const batch = getInfiniteBatch({
   key: 'one-word',
   model: google.languageModel('gemini-2.5-flash-lite'),
+  bufferer: createBatchBufferer({ store: redis }),
 });
 
 export async function generate() {

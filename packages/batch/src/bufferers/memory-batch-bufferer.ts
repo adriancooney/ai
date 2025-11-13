@@ -52,14 +52,14 @@ export function createMemoryBatchBufferer(
       return list.slice(start, end) as V[];
     },
 
-    async setnx(key: string, value: unknown): Promise<boolean> {
+    async setnx(key: string, value: unknown): Promise<number> {
       if (memory.kv.has(key)) {
-        return false;
+        return 0;
       }
 
       memory.kv.set(key, value);
 
-      return true;
+      return 1;
     },
 
     async del(key: string): Promise<void> {

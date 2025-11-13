@@ -1,4 +1,4 @@
-interface BatchModelBatch {
+export interface BatchModelBatch {
   id: string;
   // status: { status: 'pending' | 'ready' } | { status: 'error'; error: string };
   status: 'pending' | 'ready' | 'error';

@@ -53,6 +53,10 @@ export type InferBatchResponse<IF extends InfiniteBatch<any, any, any, any>> =
     : never;
 
 export interface BatchBufferer {
+  getRequests<MODEL extends BatchModelV1>(
+    model: MODEL,
+    batchId: string,
+  ): Promise<BatchRequest<MODEL>[]>;
   pushRequest<MODEL extends BatchModelV1>(
     model: MODEL,
     batchId: string,
