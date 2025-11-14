@@ -3,8 +3,8 @@ import {
   BatchRequestGenerateText,
   type InferBatchResponse,
 } from '@ai-sdk/batch';
-import { batch } from '@/app/lib/batch';
-import { createResponse } from '@/app/lib/responses';
+import { batch } from '@/lib/batch';
+import { createResponse } from '@/lib/responses';
 import { simulateReadableStream } from 'ai';
 
 export async function generate(request: BatchRequestGenerateText) {

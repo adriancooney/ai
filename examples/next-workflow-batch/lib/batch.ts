@@ -1,6 +1,6 @@
 import { getInfiniteBatch, createBatchBufferer } from '@ai-sdk/batch';
 import { google } from '@ai-sdk/google';
-import { redis } from '@/app/lib/redis';
+import { redis } from '@/lib/redis';
 
 export const batch = getInfiniteBatch({
   key: 'one-word',

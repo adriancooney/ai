@@ -1,4 +1,4 @@
-import { batch } from '@/app/lib/batch';
+import { batch } from '@/lib/batch';
 import { resumeHook } from 'workflow/api';
 
 export async function GET() {
