@@ -1,5 +1,6 @@
 'use client';
 
+import { Button, Spinner } from '@radix-ui/themes';
 import { useState } from 'react';
 
 export function ProcessButton() {
@@ -18,8 +19,8 @@ export function ProcessButton() {
   }
 
   return (
-    <button onClick={handleProcess} disabled={loading}>
-      {loading ? 'Processing...' : 'Process Batches'}
-    </button>
+    <Button onClick={handleProcess} disabled={loading}>
+      {loading ? <Spinner /> : 'Process Batches'}
+    </Button>
   );
 }

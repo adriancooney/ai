@@ -4,6 +4,19 @@ import { batch } from '@/app/lib/batch';
 import { findResponses, clearResponses } from '@/app/lib/responses';
 import { ProcessButton } from './components/process-button';
 import { WorkflowSection } from './components/workflow-section';
+import {
+  Badge,
+  Box,
+  Button,
+  Card,
+  Code,
+  Container,
+  Flex,
+  Heading,
+  Text,
+} from '@radix-ui/themes';
+import { revalidatePath } from 'next/cache';
+import Chat from './chat/page';
 
 export const dynamic = 'force-dynamic';
 
@@ -20,68 +33,92 @@ export default async function Page() {
       model: google.languageModel('gemini-2.5-flash-lite'),
       id: formData.get('batchId') as string,
     });
+
+    revalidatePath('/');
   }
 
   async function clearBufferAction() {
     'use server';
 
     await batch.clearBufferedRequests();
+    revalidatePath('/');
   }
 
   async function clearResponsesAction() {
     'use server';
 
     await clearResponses();
+    revalidatePath('/');
   }
 
   return (
-    <div>
-      <WorkflowSection />
+    <Container>
+      <Flex align="stretch" gap="2" minHeight="600px">
+        <Flex flexGrow="1" direction="column" gap="2">
+          <Card>
+            <Flex direction="column" gap="2">
+              <Flex justify="between" align="center">
+                <Heading size="5">Batches ({batches.length})</Heading>
+                <ProcessButton />
+              </Flex>
+              {batches.map(batch => {
+                return (
+                  <Flex key={batch.id} justify="between" align="center">
+                    <Text>
+                      <Code>{batch.id}</Code> <Badge>{batch.status}</Badge>
+                    </Text>
+                    <form action={deleteBatchAction}>
+                      <input type="hidden" name="batchId" value={batch.id} />
+                      <Button type="submit">Delete</Button>
+                    </form>
+                  </Flex>
+                );
+              })}
+            </Flex>
+          </Card>
 
-      <h1>Batches: {batches.length}</h1>
-      <ul>
-        {batches.map(batch => {
-          return (
-            <div key={batch.id}>
-              <h4>
-                {batch.id}: {batch.status}
-              </h4>
-              <form action={deleteBatchAction}>
-                <input type="hidden" name="batchId" value={batch.id} />
-                <button type="submit">Delete</button>
-              </form>
-            </div>
-          );
-        })}
-      </ul>
+          <Card>
+            <Flex direction="column" gap="2">
+              <Flex justify="between" align="center">
+                <Heading size="5">
+                  Buffered Requests ({buffererRequests.length})
+                </Heading>
+                <form action={clearBufferAction}>
+                  <Button type="submit">Clear</Button>
+                </form>
+              </Flex>
+              {buffererRequests.map(request => (
+                <Box key={request.id} asChild>
+                  <Code>
+                    <pre>{JSON.stringify(request, null, 2)}</pre>
+                  </Code>
+                </Box>
+              ))}
+            </Flex>
+          </Card>
 
-      <ProcessButton />
-
-      <h1>Buffered Requests: {buffererRequests.length}</h1>
-      <form action={clearBufferAction}>
-        <button type="submit">Clear</button>
-      </form>
-      <ul>
-        {buffererRequests.map(request => (
-          <li key={request.id}>
-            <pre>
-              <code>{JSON.stringify(request, null, 2)}</code>
-            </pre>
-          </li>
-        ))}
-      </ul>
-
-      <h1>Responses: {responses.length}</h1>
-      <form action={clearResponsesAction}>
-        <button type="submit">Clear</button>
-      </form>
-      {responses.map(response => (
-        <li key={response.id}>
-          <pre>
-            <code>{JSON.stringify(response, null, 2)}</code>
-          </pre>
-        </li>
-      ))}
-    </div>
+          <Card>
+            <Flex direction="column" gap="2">
+              <Flex justify="between" align="center">
+                <Heading size="5">Responses ({responses.length})</Heading>
+                <form action={clearResponsesAction}>
+                  <Button type="submit">Clear</Button>
+                </form>
+              </Flex>
+              {responses.map(response => (
+                <Box key={response.id} asChild>
+                  <Code>
+                    <pre>{JSON.stringify(response, null, 2)}</pre>
+                  </Code>
+                </Box>
+              ))}
+            </Flex>
+          </Card>
+        </Flex>
+        <Flex flexGrow="1">
+          <Chat />
+        </Flex>
+      </Flex>
+    </Container>
   );
 }

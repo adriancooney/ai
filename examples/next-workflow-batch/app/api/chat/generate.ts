@@ -11,10 +11,7 @@ export async function generate(request: BatchRequestGenerateText) {
   'use workflow';
 
   const startedAt = Date.now();
-  const response = await generateTextBatch({
-    ...request,
-    id: `the-human-torch:${Date.now()}`,
-  });
+  const response = await generateTextBatch(request);
 
   await saveResponse(response);
 
@@ -28,9 +25,20 @@ async function generateTextBatch(
 ): Promise<InferBatchResponse<typeof batch>> {
   'use workflow';
 
-  await pushRequest(request);
+  const id = await generateRandomId();
 
-  return await createHook({ token: request.id });
+  await pushRequest({
+    ...request,
+    id,
+  });
+
+  return await createHook({ token: id });
+}
+
+async function generateRandomId() {
+  'use step';
+
+  return crypto.randomUUID();
 }
 
 async function pushRequest(request: BatchRequestGenerateText) {
