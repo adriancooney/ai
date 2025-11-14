@@ -702,15 +702,17 @@ export class GoogleGenerativeAILanguageModel
     // Convert requests to Google batch format
     const batchRequests = await Promise.all(
       options.requests.map(async (batchRequest: any) => {
+        console.log('Processing batch request:', JSON.stringify(batchRequest, null, 2));
+
         // Extract the id from the request
         const { id, ...request } = batchRequest;
 
         // Convert high-level prompt format to LanguageModelV3Prompt format
         let prompt: any[];
         if (request.prompt != null) {
-          // Simple string prompt - convert to messages array
+          // Simple string prompt - convert to messages array with proper content structure
           if (typeof request.prompt === 'string') {
-            prompt = [{ role: 'user', content: request.prompt }];
+            prompt = [{ role: 'user', content: [{ type: 'text', text: request.prompt }] }];
           } else if (Array.isArray(request.prompt)) {
             prompt = request.prompt;
           } else {
@@ -722,6 +724,8 @@ export class GoogleGenerativeAILanguageModel
           throw new Error('Either prompt or messages must be defined');
         }
 
+        console.log('Converted prompt:', JSON.stringify(prompt, null, 2));
+
         // Add system message if provided
         if (request.system != null && typeof request.system === 'string') {
           prompt = [{ role: 'system', content: request.system }, ...prompt];
@@ -730,6 +734,9 @@ export class GoogleGenerativeAILanguageModel
         const { contents, systemInstruction } =
           convertToGoogleGenerativeAIMessages(prompt, { isGemmaModel });
 
+        console.log('Google contents:', JSON.stringify(contents, null, 2));
+        console.log('System instruction:', JSON.stringify(systemInstruction, null, 2));
+
         const { tools: googleTools, toolConfig: googleToolConfig } =
           prepareTools({
             tools: request.tools,
@@ -737,7 +744,7 @@ export class GoogleGenerativeAILanguageModel
             modelId: this.modelId,
           });
 
-        return {
+        const finalRequest = {
           request: {
             contents,
             generationConfig: {
@@ -769,12 +776,21 @@ export class GoogleGenerativeAILanguageModel
             id,
           },
         };
+
+        console.log('Final batch request:', JSON.stringify(finalRequest, null, 2));
+
+        return finalRequest;
       }),
     );
 
+    // Encode custom metadata in display_name since Google Batch API doesn't support batch-level metadata
+    // Format: metadata:base64encodedJson
+    const metadataJson = JSON.stringify(options.metadata ?? {});
+    const metadataEncoded = Buffer.from(metadataJson).toString('base64');
+
     const batchBody = {
       batch: {
-        display_name: `batch-${Date.now()}`,
+        display_name: `ai-sdk:${metadataEncoded}`,
         input_config: {
           requests: {
             requests: batchRequests,
@@ -783,6 +799,19 @@ export class GoogleGenerativeAILanguageModel
       },
     };
 
+    console.log('creating batch', {
+      url: `${this.config.baseURL}/${getModelPath(
+        this.modelId,
+      )}:batchGenerateContent`,
+      headers: mergedHeaders,
+      body: batchBody,
+      failedResponseHandler: googleFailedResponseHandler,
+      successfulResponseHandler: createJsonResponseHandler(
+        lazySchema(() => zodSchema(z.object({ name: z.string() }))),
+      ),
+      abortSignal: options.abortSignal,
+      fetch: this.config.fetch,
+    });
     const { value: response } = await postJsonToApi({
       url: `${this.config.baseURL}/${getModelPath(
         this.modelId,
@@ -796,6 +825,8 @@ export class GoogleGenerativeAILanguageModel
       abortSignal: options.abortSignal,
       fetch: this.config.fetch,
     });
+
+    console.log('batch created', response);
 
     return {
       id: response.name,
@@ -863,10 +894,13 @@ export class GoogleGenerativeAILanguageModel
         status = 'pending';
     }
 
+    // Extract custom metadata from display_name
+    const customMetadata = this.decodeCustomMetadata(data.metadata?.displayName);
+
     return {
       id: options.id,
       status,
-      metadata: data.metadata ?? {},
+      metadata: customMetadata,
     };
   }
 
@@ -907,6 +941,8 @@ export class GoogleGenerativeAILanguageModel
 
     const batchData = await batchStatusResponse.json();
 
+    console.log({ batchData });
+
     // Check if responses are inlined or in a file
     const inlinedResponses =
       batchData.response?.inlinedResponses?.inlinedResponses;
@@ -914,12 +950,14 @@ export class GoogleGenerativeAILanguageModel
     if (inlinedResponses && Array.isArray(inlinedResponses)) {
       // Responses are inlined
       for (const result of inlinedResponses) {
+        console.log('Inlined result:', JSON.stringify(result, null, 2));
+
         // Process the response to add usage field from usageMetadata
         const processedResponse = this.processBatchResponse(result.response);
 
         yield {
           id: result.metadata?.id ?? '',
-          data: processedResponse,
+          ...processedResponse,
         };
       }
     } else {
@@ -950,13 +988,14 @@ export class GoogleGenerativeAILanguageModel
       for (const line of lines) {
         if (line.trim()) {
           const result = JSON.parse(line);
+          console.log('File result:', JSON.stringify(result, null, 2));
 
           // Process the response to add usage field from usageMetadata
           const processedResponse = this.processBatchResponse(result.response);
 
           yield {
             id: result.metadata?.id ?? '',
-            data: processedResponse,
+            ...processedResponse,
           };
         }
       }
@@ -1019,26 +1058,43 @@ export class GoogleGenerativeAILanguageModel
 
     const fetchFunction = this.config.fetch ?? fetch;
 
-    // List all batches (not model-specific)
-    const response = await fetchFunction(
-      `${this.config.baseURL}/batches`,
-      {
+    // Collect all batches across all pages
+    const allBatches: any[] = [];
+    let nextPageToken: string | undefined = undefined;
+
+    do {
+      // Build URL with pagination token if available
+      const url = new URL(`${this.config.baseURL}/batches`);
+      if (nextPageToken) {
+        url.searchParams.set('pageToken', nextPageToken);
+      }
+
+      const response = await fetchFunction(url.toString(), {
         method: 'GET',
         headers,
         signal: options?.abortSignal,
-      },
-    );
+      });
 
-    if (!response.ok) {
-      throw new Error(
-        `Failed to list batches: ${response.status} ${response.statusText}`,
-      );
-    }
+      if (!response.ok) {
+        throw new Error(
+          `Failed to list batches: ${response.status} ${response.statusText}`,
+        );
+      }
 
-    const data = await response.json();
-    const batches = data.batches ?? [];
+      const data = await response.json();
+      const batches = data.operations ?? [];
 
-    return batches.map((batch: any) => {
+      allBatches.push(...batches);
+
+      // Check for next page
+      nextPageToken = data.nextPageToken;
+
+      console.log(`Fetched ${batches.length} batches, total so far: ${allBatches.length}, nextPageToken: ${nextPageToken}`);
+    } while (nextPageToken);
+
+    console.log(`Total batches fetched: ${allBatches.length}`);
+
+    return allBatches.map((batch: any) => {
       const state = batch.metadata?.state;
       let status: 'pending' | 'ready' | 'error';
 
@@ -1059,31 +1115,118 @@ export class GoogleGenerativeAILanguageModel
           status = 'pending';
       }
 
+      // Extract custom metadata from display_name
+      const customMetadata = this.decodeCustomMetadata(batch.metadata?.displayName);
+
       return {
         id: batch.name,
         status,
-        metadata: batch.metadata ?? {},
+        metadata: customMetadata,
       };
     });
   }
 
+  /**
+   * Decode custom metadata from batch display_name
+   * Format: ai-sdk:base64encodedJson
+   */
+  private decodeCustomMetadata(displayName: string | undefined): Record<string, unknown> {
+    if (!displayName || !displayName.startsWith('ai-sdk:')) {
+      return {};
+    }
+
+    try {
+      const encoded = displayName.substring('ai-sdk:'.length);
+      const decoded = Buffer.from(encoded, 'base64').toString('utf-8');
+      return JSON.parse(decoded);
+    } catch (error) {
+      console.warn('Failed to decode custom metadata from display_name:', error);
+      return {};
+    }
+  }
+
   private processBatchResponse(response: any): any {
-    // Convert Google's usageMetadata to the expected usage format
-    if (response.usageMetadata) {
-      const { usageMetadata, ...rest } = response;
-      return {
-        ...rest,
-        usage: {
+    // Handle undefined or null responses
+    if (!response) {
+      return response;
+    }
+
+    // Extract the first candidate
+    const candidate = response.candidates?.[0];
+    if (!candidate) {
+      return response;
+    }
+
+    // Extract text from candidate parts
+    const parts = candidate.content?.parts ?? [];
+    const textParts = parts.filter((part: any) => 'text' in part && part.text);
+    const text = textParts.map((part: any) => part.text).join('');
+
+    // Convert usage metadata
+    const usageMetadata = response.usageMetadata;
+    const usage = usageMetadata
+      ? {
           inputTokens: usageMetadata.promptTokenCount ?? undefined,
           outputTokens: usageMetadata.candidatesTokenCount ?? undefined,
           totalTokens: usageMetadata.totalTokenCount ?? undefined,
           reasoningTokens: usageMetadata.thoughtsTokenCount ?? undefined,
+        }
+      : {};
+
+    // Map finish reason
+    const finishReason = mapGoogleGenerativeAIFinishReason({
+      finishReason: candidate.finishReason,
+      hasToolCalls: false, // TODO: handle tool calls in batch responses
+    });
+
+    // Return AI SDK compatible format
+    return {
+      text,
+      finishReason,
+      usage,
+      totalUsage: usage,
+      content: textParts.map((part: any) => ({
+        type: 'text',
+        text: part.text,
+      })),
+      reasoning: [],
+      reasoningText: undefined,
+      files: [],
+      sources: [],
+      toolCalls: [],
+      staticToolCalls: [],
+      dynamicToolCalls: [],
+      toolResults: [],
+      staticToolResults: [],
+      dynamicToolResults: [],
+      warnings: undefined,
+      request: {},
+      response: {
+        messages: [
+          {
+            role: 'assistant',
+            content: textParts.map((part: any) => ({
+              type: 'text',
+              text: part.text,
+            })),
+          },
+        ],
+      },
+      providerMetadata: {
+        google: {
+          promptFeedback: response.promptFeedback ?? null,
+          groundingMetadata: candidate.groundingMetadata ?? null,
+          urlContextMetadata: candidate.urlContextMetadata ?? null,
+          safetyRatings: candidate.safetyRatings ?? null,
+          usageMetadata: usageMetadata ?? null,
         },
-        // Keep usageMetadata for backwards compatibility
-        usageMetadata,
-      };
-    }
-    return response;
+      },
+      steps: [],
+      output: undefined,
+      experimental_output: undefined,
+      // Keep raw response for debugging
+      _raw: response,
+    };
   }
 }
 

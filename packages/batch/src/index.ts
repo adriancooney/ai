@@ -1,7 +1,7 @@
 export { getInfiniteBatch } from './infinite-batch';
 export { createProviderInfiniteBatchStore } from './provider-infinite-batch-store';
 export type * from './types';
-export { findBatches } from './batch';
+export { findBatches, deleteBatchById } from './batch';
 export { createMemoryBatchBufferer } from './bufferers/memory-batch-bufferer';
 export {
   createBatchBufferer,

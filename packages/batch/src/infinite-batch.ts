@@ -1,7 +1,6 @@
 import { BatchModelV1 } from '@ai-sdk/provider';
 import { Batch, BatchBufferer, BatchRequest, BatchResponse } from './types';
 import { consumeBatchResults } from './batch';
-import { type BatchBuilder, createBatchBuilder } from './batch-builder';
 import { ToolSet, Output } from 'ai';
 import { createProviderInfiniteBatchStore } from './provider-infinite-batch-store';
 import { createMemoryBatchBufferer } from './bufferers/memory-batch-bufferer';
@@ -13,6 +12,7 @@ export interface InfiniteBatch<
   OUTPUT extends Output.Output,
 > {
   getBufferedRequests(): Promise<BatchRequest<MODEL>[]>;
+  clearBufferedRequests(): Promise<void>;
   pushRequest(
     request: BatchRequest<MODEL>,
     options?: { cursor?: CURSOR; abortSignal?: AbortSignal },
@@ -76,6 +76,8 @@ export function getInfiniteBatch<
       options,
     );
 
+    console.log({ batches });
+
     return batches;
   }
 
@@ -106,6 +108,8 @@ export function getInfiniteBatch<
   > {
     const batchesToConsume = await consumeAvailableBatches();
 
+    console.log({ batchesToConsume });
+
     for (const { consumeResponses } of batchesToConsume) {
       for await (const response of consumeResponses) {
         yield response;
@@ -118,8 +122,18 @@ export function getInfiniteBatch<
       return await bufferer.getRequests(model, groupKey);
     },
 
+    async clearBufferedRequests() {
+      return await bufferer.clearRequests(model, groupKey);
+    },
+
     async pushRequest(request, options) {
-      bufferer.pushRequest(model, groupKey, request, options);
+      await bufferer.pushRequest(
+        model,
+        groupKey,
+        { groupKey },
+        request,
+        options,
+      );
     },
 
     consumeAvailableResponses,

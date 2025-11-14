@@ -17,6 +17,8 @@ export function createProviderInfiniteBatchStore<CURSOR>(
 
       const batches = await model.doListBatches(options);
 
+      console.log(JSON.stringify({ batches }, null, 2));
+
       const matchingBatches = batches.filter(batch => {
         if (query.groupKey && batch.metadata.groupKey !== query.groupKey) {
           return false;

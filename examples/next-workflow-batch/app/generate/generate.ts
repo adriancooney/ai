@@ -1,35 +1,28 @@
-import { createHook } from 'workflow';
+import { createHook, getWritable } from 'workflow';
 import {
-  getInfiniteBatch,
   BatchRequestGenerateText,
   type InferBatchResponse,
-  createBatchBufferer,
 } from '@ai-sdk/batch';
-import { google } from '@ai-sdk/google';
-import { Redis } from '@upstash/redis';
-
-const redis = Redis.fromEnv();
-
-export const batch = getInfiniteBatch({
-  key: 'one-word',
-  model: google.languageModel('gemini-2.5-flash-lite'),
-  bufferer: createBatchBufferer({ store: redis }),
-});
+import { batch } from '@/app/lib/batch';
+import { saveResponse } from '@/app/lib/responses';
 
 export async function generate() {
   'use workflow';
 
   const startedAt = Date.now();
 
-  const { text: word } = await generateTextBatch({
+  const response = await generateTextBatch({
     id: `the-human-torch:${Date.now()}`,
     prompt: 'Respond with one word: The Human Torch is denied a bank loan.',
   });
 
   console.log(
-    word,
+    response.text,
     `(took ${((Date.now() - startedAt) / 1000 / 60 / 60).toFixed(2)}hrs)`,
   );
+
+  await saveResponseStep(response);
+  await sendResponseText(response.text);
 }
 
 async function generateTextBatch(
@@ -46,4 +39,18 @@ async function pushRequest(request: BatchRequestGenerateText) {
   'use step';
 
   await batch.pushRequest(request);
+}
+
+async function saveResponseStep(response: InferBatchResponse<typeof batch>) {
+  'use step';
+
+  await saveResponse(response);
+}
+
+async function sendResponseText(text: string) {
+  'use step';
+
+  const writer = getWritable().getWriter();
+  await writer.write(text);
+  await writer.releaseLock();
 }

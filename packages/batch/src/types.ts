@@ -60,7 +60,9 @@ export interface BatchBufferer {
   pushRequest<MODEL extends BatchModelV1>(
     model: MODEL,
     batchId: string,
+    batchMetadata: BatchMetadata,
     request: BatchRequest<MODEL>,
     options?: { abortSignal?: AbortSignal },
   ): Promise<void>;
+  clearRequests(model: BatchModelV1, batchId: string): Promise<void>;
 }

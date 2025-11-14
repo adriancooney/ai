@@ -1,6 +1,6 @@
 import { BatchModelV1 } from '@ai-sdk/provider';
 import { BatchMeters, createBatchMeters } from '../batch-policy';
-import { BatchBufferer, BatchRequest } from '../types';
+import { BatchBufferer, BatchMetadata, BatchRequest } from '../types';
 import { createBatch } from '../batch';
 
 // Use the Redis interface for simplicities sake
@@ -41,6 +41,7 @@ export function createBatchBufferer({
     async pushRequest<MODEL extends BatchModelV1>(
       model: MODEL,
       batchId: string,
+      batchMetadata: BatchMetadata,
       request: BatchRequest<MODEL>,
       options?: { abortSignal?: AbortSignal },
     ) {
@@ -57,7 +58,7 @@ export function createBatchBufferer({
           );
 
           if (!batchMeters.isRequestAcceptable(request)) {
-            await submitBatch(store, model, batchId);
+            await submitBatch(store, model, batchId, batchMetadata);
           }
 
           await pushRequest(model, store, batchId, request);
@@ -92,8 +93,19 @@ export function createBatchBufferer({
 
           if (batchHeadRequest?.id === request.id) {
             // No change in the batch, submit it
-            await submitBatch(store, model, batchId);
+            await submitBatch(store, model, batchId, batchMetadata);
           }
+        },
+        locking,
+      );
+    },
+
+    async clearRequests(model, batchId) {
+      await withBatchLock(
+        store,
+        batchId,
+        async () => {
+          await clearBatch(store, batchId);
         },
         locking,
       );
@@ -182,6 +194,7 @@ async function submitBatch<MODEL extends BatchModelV1>(
   store: KVStore,
   model: MODEL,
   batchId: string,
+  batchMetadata: BatchMetadata,
 ): Promise<void> {
   const requests = await store.lrange<BatchRequest<MODEL>>(
     `batches:${batchId}:requests`,
@@ -195,10 +208,14 @@ async function submitBatch<MODEL extends BatchModelV1>(
 
   await createBatch({
     model,
-    metadata: { batchId },
+    metadata: batchMetadata,
     requests,
   });
 
+  await clearBatch(store, batchId);
+}
+
+async function clearBatch(store: KVStore, batchId: string): Promise<void> {
   await Promise.all([
     store.del(`batches:${batchId}:requests`),
     store.del(`batches:${batchId}:meters`),
