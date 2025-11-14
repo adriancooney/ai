@@ -4,25 +4,22 @@ import {
   type InferBatchResponse,
 } from '@ai-sdk/batch';
 import { batch } from '@/app/lib/batch';
-import { saveResponse } from '@/app/lib/responses';
+import { createResponse } from '@/app/lib/responses';
 
-export async function generate() {
+export async function generate(prompt: string) {
   'use workflow';
 
   const startedAt = Date.now();
 
   const response = await generateTextBatch({
     id: `the-human-torch:${Date.now()}`,
-    prompt: 'Respond with one word: The Human Torch is denied a bank loan.',
+    prompt,
   });
 
-  console.log(
-    response.text,
-    `(took ${((Date.now() - startedAt) / 1000 / 60 / 60).toFixed(2)}hrs)`,
+  await saveResponse(response);
+  await sendResponseText(
+    `${response.text} (took ${((Date.now() - startedAt) / 1000 / 60 / 60).toFixed(2)}hrs)`,
   );
-
-  await saveResponseStep(response);
-  await sendResponseText(response.text);
 }
 
 async function generateTextBatch(
@@ -41,10 +38,10 @@ async function pushRequest(request: BatchRequestGenerateText) {
   await batch.pushRequest(request);
 }
 
-async function saveResponseStep(response: InferBatchResponse<typeof batch>) {
+async function saveResponse(response: InferBatchResponse<typeof batch>) {
   'use step';
 
-  await saveResponse(response);
+  await createResponse(response);
 }
 
 async function sendResponseText(text: string) {

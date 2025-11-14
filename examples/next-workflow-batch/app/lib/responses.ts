@@ -14,7 +14,9 @@ export async function findResponses(): Promise<
   return Object.values(responses) as InferBatchResponse<typeof batch>[];
 }
 
-export async function saveResponse(response: InferBatchResponse<typeof batch>) {
+export async function createResponse(
+  response: InferBatchResponse<typeof batch>,
+) {
   await redis.hset('responses', { [`${response.id}`]: response });
 }
 

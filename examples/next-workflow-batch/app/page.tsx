@@ -15,12 +15,6 @@ export default async function Page() {
   const buffererRequests = await batch.getBufferedRequests();
   const responses = await findResponses();
 
-  async function generateAction() {
-    'use server';
-
-    await start(generate);
-  }
-
   async function deleteBatchAction(formData: FormData) {
     'use server';
 
@@ -62,10 +56,6 @@ export default async function Page() {
           );
         })}
       </ul>
-
-      <form action={generateAction}>
-        <button type="submit">Generate Text</button>
-      </form>
 
       <ProcessButton />
 

@@ -5,6 +5,9 @@ import { useState } from 'react';
 export function WorkflowSection() {
   const [loading, setLoading] = useState(false);
   const [output, setOutput] = useState('');
+  const [input, setInput] = useState(
+    'Respond with one word: The Human Torch is denied a bank loan.',
+  );
 
   async function handleGenerate() {
     setLoading(true);
@@ -38,7 +41,9 @@ export function WorkflowSection() {
       }
     } catch (error) {
       console.error('Failed to generate:', error);
-      setOutput('Error: ' + (error instanceof Error ? error.message : 'Unknown error'));
+      setOutput(
+        'Error: ' + (error instanceof Error ? error.message : 'Unknown error'),
+      );
     } finally {
       setLoading(false);
     }
@@ -47,6 +52,15 @@ export function WorkflowSection() {
   return (
     <div>
       <h1>Workflow</h1>
+
+      <div>
+        <textarea
+          style={{ width: '300px', height: '100px' }}
+          value={input}
+          onChange={e => setInput(e.target.value)}
+        />
+      </div>
+
       <button onClick={handleGenerate} disabled={loading}>
         {loading ? 'Loading...' : 'Generate'}
       </button>
