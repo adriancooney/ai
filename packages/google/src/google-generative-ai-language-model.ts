@@ -702,8 +702,6 @@ export class GoogleGenerativeAILanguageModel
     // Convert requests to Google batch format
     const batchRequests = await Promise.all(
       options.requests.map(async (batchRequest: any) => {
-        console.log('Processing batch request:', JSON.stringify(batchRequest, null, 2));
-
         // Extract the id from the request
         const { id, ...request } = batchRequest;
 
@@ -724,8 +722,6 @@ export class GoogleGenerativeAILanguageModel
           throw new Error('Either prompt or messages must be defined');
         }
 
-        console.log('Converted prompt:', JSON.stringify(prompt, null, 2));
-
         // Add system message if provided
         if (request.system != null && typeof request.system === 'string') {
           prompt = [{ role: 'system', content: request.system }, ...prompt];
@@ -733,9 +729,6 @@ export class GoogleGenerativeAILanguageModel
 
         const { contents, systemInstruction } =
           convertToGoogleGenerativeAIMessages(prompt, { isGemmaModel });
-
-        console.log('Google contents:', JSON.stringify(contents, null, 2));
-        console.log('System instruction:', JSON.stringify(systemInstruction, null, 2));
 
         const { tools: googleTools, toolConfig: googleToolConfig } =
           prepareTools({
@@ -777,8 +770,6 @@ export class GoogleGenerativeAILanguageModel
           },
         };
 
-        console.log('Final batch request:', JSON.stringify(finalRequest, null, 2));
-
         return finalRequest;
       }),
     );
@@ -799,19 +790,6 @@ export class GoogleGenerativeAILanguageModel
       },
     };
 
-    console.log('creating batch', {
-      url: `${this.config.baseURL}/${getModelPath(
-        this.modelId,
-      )}:batchGenerateContent`,
-      headers: mergedHeaders,
-      body: batchBody,
-      failedResponseHandler: googleFailedResponseHandler,
-      successfulResponseHandler: createJsonResponseHandler(
-        lazySchema(() => zodSchema(z.object({ name: z.string() }))),
-      ),
-      abortSignal: options.abortSignal,
-      fetch: this.config.fetch,
-    });
     const { value: response } = await postJsonToApi({
       url: `${this.config.baseURL}/${getModelPath(
         this.modelId,
@@ -825,8 +803,6 @@ export class GoogleGenerativeAILanguageModel
       abortSignal: options.abortSignal,
       fetch: this.config.fetch,
     });
-
-    console.log('batch created', response);
 
     return {
       id: response.name,
@@ -941,8 +917,6 @@ export class GoogleGenerativeAILanguageModel
 
     const batchData = await batchStatusResponse.json();
 
-    console.log({ batchData });
-
     // Check if responses are inlined or in a file
     const inlinedResponses =
       batchData.response?.inlinedResponses?.inlinedResponses;
@@ -950,8 +924,6 @@ export class GoogleGenerativeAILanguageModel
     if (inlinedResponses && Array.isArray(inlinedResponses)) {
       // Responses are inlined
       for (const result of inlinedResponses) {
-        console.log('Inlined result:', JSON.stringify(result, null, 2));
-
         // Process the response to add usage field from usageMetadata
         const processedResponse = this.processBatchResponse(result.response);
 
@@ -988,7 +960,6 @@ export class GoogleGenerativeAILanguageModel
       for (const line of lines) {
         if (line.trim()) {
           const result = JSON.parse(line);
-          console.log('File result:', JSON.stringify(result, null, 2));
 
           // Process the response to add usage field from usageMetadata
           const processedResponse = this.processBatchResponse(result.response);
@@ -1088,11 +1059,7 @@ export class GoogleGenerativeAILanguageModel
 
       // Check for next page
       nextPageToken = data.nextPageToken;
-
-      console.log(`Fetched ${batches.length} batches, total so far: ${allBatches.length}, nextPageToken: ${nextPageToken}`);
     } while (nextPageToken);
-
-    console.log(`Total batches fetched: ${allBatches.length}`);
 
     return allBatches.map((batch: any) => {
       const state = batch.metadata?.state;

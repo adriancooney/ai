@@ -5,14 +5,15 @@ import {
 } from '@ai-sdk/batch';
 import { batch } from '@/app/lib/batch';
 import { createResponse } from '@/app/lib/responses';
+import { simulateReadableStream } from 'ai';
 
-export async function generate(prompt: string) {
+export async function generate(request: BatchRequestGenerateText) {
   'use workflow';
 
   const startedAt = Date.now();
   const response = await generateTextBatch({
+    ...request,
     id: `the-human-torch:${Date.now()}`,
-    prompt,
   });
 
   await saveResponse(response);
@@ -47,7 +48,13 @@ async function saveResponse(response: InferBatchResponse<typeof batch>) {
 async function sendResponseText(text: string) {
   'use step';
 
-  const writer = getWritable().getWriter();
-  await writer.write(text);
-  await writer.releaseLock();
+  const writer = getWritable();
+
+  const stream = simulateReadableStream({
+    chunks: text.split(' '),
+    initialDelayInMs: 0, // Wait 1 second before first chunk
+    chunkDelayInMs: 0.2, // Wait 0.5 seconds between chunks
+  });
+
+  await stream.pipeTo(writer);
 }

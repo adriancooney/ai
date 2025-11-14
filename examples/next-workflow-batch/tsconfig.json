@@ -29,6 +29,6 @@
     ".next/types/**/*.ts",
     ".next/dev/types/**/*.ts",
     "**/*.mts"
-, "app/generate/route.oldts"  ],
+, "app/api/chat/generate/route.oldts"  ],
   "exclude": ["node_modules"]
 }

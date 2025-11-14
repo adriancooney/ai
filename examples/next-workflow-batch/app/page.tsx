@@ -1,7 +1,7 @@
 import { google } from '@ai-sdk/google';
 import { deleteBatchById, findBatches } from '@ai-sdk/batch';
 import { start } from 'workflow/api';
-import { generate } from './generate/generate';
+import { generate } from './api/chat/generate/generate';
 import { batch } from '@/app/lib/batch';
 import { findResponses, clearResponses } from '@/app/lib/responses';
 import { ProcessButton } from './components/process-button';
