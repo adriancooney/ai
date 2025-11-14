@@ -10,15 +10,15 @@ export async function generate(prompt: string) {
   'use workflow';
 
   const startedAt = Date.now();
-
   const response = await generateTextBatch({
     id: `the-human-torch:${Date.now()}`,
     prompt,
   });
 
   await saveResponse(response);
+
   await sendResponseText(
-    `${response.text} (took ${((Date.now() - startedAt) / 1000 / 60 / 60).toFixed(2)}hrs)`,
+    `${response.text} (took ${new Date(Date.now() - startedAt).toISOString().slice(11, 19)})`,
   );
 }
 

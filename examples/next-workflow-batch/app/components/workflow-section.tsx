@@ -16,6 +16,7 @@ export function WorkflowSection() {
     try {
       const response = await fetch('/generate', {
         method: 'POST',
+        body: input,
       });
 
       if (!response.ok) {
